@@ -1,5 +1,9 @@
 require "crep/version"
+require 'crep/command'
+require 'claide'
 
 module Crep
-  # Your code goes here...
+  def self.run
+    Command.run(ARGV)
+  end
 end
