@@ -1,14 +1,12 @@
-
 module Crep
 
   class CrashDataSource
 
     def crashes (top, app_title)
-      puts "fetching top #{top} crashes for #{app_title}"
-
       app = app(app_title)
-      puts app.title
-      puts app.public_identifier
+
+      $logger.debug("Fetching top #{top} crash groups for #{app_title} (#{app.public_identifier})")
+
       puts app.crash_reasons
     end
 
