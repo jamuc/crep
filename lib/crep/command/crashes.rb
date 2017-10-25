@@ -12,7 +12,8 @@ module Crep
 
     def self.options
       [
-        ['--top=5', "If set, Crashes will show the top x crashes. #{default_top_count} by default."]
+        ['--top=5', "If set, Crep will show the top x crashes. #{default_top_count} by default."],
+        ['--app=<my app title>', "Crep will show crashes of this app"]
       ].concat(super)
     end
 
@@ -21,17 +22,18 @@ module Crep
     DESC
 
     self.description = <<-DESC
-      Arguments are all optional.
+      Besides the optional `top` parameter, Crep requires the `app` parameter.
     DESC
 
     def initialize(argv)
         @top = argv.option('top') || default_top_count
+        raise 'Missing `app` parameter' unless @app_title = argv.option('app')
         super
     end
 
     def run
       crash_datasource = CrashDataSource.new
-      crash_datasource.crashes(@top)
+      crash_datasource.crashes(@top, @app_title)
     end
   end
 end
