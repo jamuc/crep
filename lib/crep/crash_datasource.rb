@@ -7,7 +7,10 @@ module Crep
 
       $logger.debug("Fetching top #{top} crash groups for #{app_title} (#{app.public_identifier})")
 
-      puts app.crash_reasons
+      top_crash_reasons = app.crash_reasons.take(top.to_i)
+      top_crash_reasons.each do |reason|
+        puts reason.reason
+      end
     end
 
     def app(title)
