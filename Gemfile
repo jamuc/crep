@@ -1,4 +1,6 @@
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in crep.gemspec
+# Crep's dependencies in crep.gemspec
 gemspec
+
+gem 'hockeyapp', :git => 'https://github.com/tapptic/hockeyapp.git'
