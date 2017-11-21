@@ -42,7 +42,8 @@ module Crep
       base_uri = ENV["CREP_HOCKEY_BASE_URI"]
 
       HockeyApp::Config.configure do |config|
-        config.token = ENV["CREP_HOCKEY_API_TOKEN"]
+        raise 'Missing API token (CREP_HOCKEY_API_TOKEN)' unless token = ENV["CREP_HOCKEY_API_TOKEN"]
+        config.token = token
         config.base_uri = base_uri
       end
 
