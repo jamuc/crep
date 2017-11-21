@@ -1,8 +1,10 @@
+require 'hockeyapp'
+
 module Crep
 
   class CrashDataSource
 
-    def crashes (top, app_title)
+    def crashes (top, app_title, version, build)
       app = app(app_title)
 
       $logger.debug("Fetching top #{top} crash groups for #{app_title} (#{app.public_identifier})")
