@@ -13,12 +13,12 @@ module Crep
 
       version = filtered_versions.first
 
-      show_version_info version
+      show_version_info(version, top)
     end
 
-    def show_version_info version
+    def show_version_info(version, top)
       reasons = version.crash_reasons ({'sort' => 'number_of_crashes', 'order' => 'desc'})
-      unresolved_reasons = unresolved_reasons reasons
+      unresolved_reasons = unresolved_reasons(reasons).take(top.to_i)
       unresolved_reasons.each do |reason|
         show_reason reason
       end
