@@ -7,12 +7,35 @@ module Crep
     def crashes (top, app_title, version, build)
       app = app(app_title)
 
-      $logger.debug("Fetching top #{top} crash groups for #{app_title} (#{app.public_identifier})")
+      $logger.debug("Fetching top #{top} crash groups for #{app_title} (#{version}/#{build}) #{app.public_identifier}")
 
-      top_crash_reasons = app.crash_reasons.take(top.to_i)
-      top_crash_reasons.each do |reason|
-        puts reason.reason
+      filtered_versions = filtered_versions_by_version_and_build(app.versions, version, build)
+
+      $logger.debug("Found #{filtered_versions.count} versions:")
+
+      version = filtered_versions.first
+
+      show_version_info version
+    end
+
+    def show_version_info version
+      reasons = version.crash_reasons ({'sort' => 'number_of_crashes', 'order' => 'desc'})
+      unresolved_reasons = unresolved_reasons reasons
+      unresolved_reasons.each do |reason|
+        show_reason reason
       end
+    end
+
+    def unresolved_reasons reasons
+      reasons.select do |reason|
+        reason.fixed == false
+      end
+    end
+
+    def show_reason reason
+      $logger.debug("Number of crashes: #{reason.number_of_crashes}")
+      $logger.debug("File/Line: #{reason.file}:#{reason.line}")
+      $logger.debug("#{reason}")
     end
 
     def app(title)
@@ -32,6 +55,13 @@ module Crep
 
       app.first
     end
-  end
 
+    def filtered_versions_by_version_and_build(versions, version_filter, build_filter)
+      filtered_versions = versions.select do |version|
+          version.shortversion == version_filter && version.version == build_filter
+      end
+
+      filtered_versions
+    end
+  end
 end
