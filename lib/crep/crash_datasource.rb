@@ -11,8 +11,6 @@ module Crep
 
       filtered_versions = filtered_versions_by_version_and_build(app.versions, version, build)
 
-      $logger.debug("Found #{filtered_versions.count} versions:")
-
       version = filtered_versions.first
 
       show_version_info version
@@ -35,7 +33,6 @@ module Crep
     def show_reason reason
       $logger.debug("Number of crashes: #{reason.number_of_crashes}")
       $logger.debug("File/Line: #{reason.file}:#{reason.line}")
-      $logger.debug("#{reason}")
     end
 
     def app(title)
