@@ -1,5 +1,6 @@
 require 'crep/model/crash_sources/crash_source'
 require 'crep/model/crash_model/app'
+require 'crep/model/crash_model/crash'
 require 'hockeyapp'
 
 module Crep
@@ -23,26 +24,21 @@ module Crep
 
       version = filtered_versions.first
 
-      show_version_info(version, top)
+      crash_groups(version).take(top.to_i)
     end
 
-    def show_version_info(version, top)
+    def crash_groups(version)
       reasons = version.crash_reasons ({ 'sort' => 'number_of_crashes', 'order' => 'desc' })
-      unresolved_reasons = unresolved_reasons(reasons).take(top.to_i)
-      unresolved_reasons.each do |reason|
-        show_reason reason
-      end
+      unresolved_reasons = unresolved_reasons(reasons)
+      crash_groups = unresolved_reasons.map { |reason|
+        Crash.new("#{reason.file}:#{reason.line}", reason.number_of_crashes)
+      }
     end
 
     def unresolved_reasons(reasons)
       reasons.select do |reason|
         reason.fixed == false
       end
-    end
-
-    def show_reason(reason)
-      $logger.debug("Number of crashes: #{reason.number_of_crashes}")
-      $logger.debug("File/Line: #{reason.file}:#{reason.line}")
     end
 
     def hockeyapp(bundle_identifier, client)
