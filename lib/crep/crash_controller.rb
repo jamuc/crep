@@ -12,7 +12,7 @@ module Crep
 
         # returns list of top crashes for the given build
         def top_crashes(version, build)
-            $logger.debug("Reporting top #{@top} crash groups for #{@crash_source.app.name} (#{version}/#{build}) #{@crash_source.app.bundle_identifier}")
+            XINGLogger.debug("Reporting top #{@top} crash groups for #{@crash_source.app.name} (#{version}/#{build}) #{@crash_source.app.bundle_identifier}")
             crashes = @crash_source.crashes(@top, version, build)
             show_crashes(crashes)
         end
@@ -24,8 +24,10 @@ module Crep
         end
 
         def show_crash(crash)
-            $logger.debug("Occurrences: #{crash.occurrences}")
-            $logger.debug("File/Line: #{crash.file_line}")
+            XINGLogger.debug("Occurrences: #{crash.occurrences}")
+            XINGLogger.debug("File/Line: #{crash.file_line}")
+            XINGLogger.debug("Reason: #{crash.reason[0..80]}")
+            XINGLogger.debug("Class: #{crash.crash_class}")
           end
     end
 
