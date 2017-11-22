@@ -18,8 +18,6 @@ module Crep
     end
 
     def crashes(top, version, build)
-      $logger.debug("Fetching top #{top} crash groups for #{@app.bundle_identifier} (#{version}/#{build}) #{@hockeyapp_app.public_identifier}")
-
       filtered_versions = filtered_versions_by_version_and_build(@hockeyapp_app.versions, version, build)
 
       version = filtered_versions.first
@@ -42,15 +40,12 @@ module Crep
     end
 
     def hockeyapp(bundle_identifier, client)
-      $logger.debug("Configuring Hockey for #{bundle_identifier}")
-
-      apps = client.get_apps
-
-      app = apps.select do |a|
+      all_apps = client.get_apps
+      apps = all_apps.select do |a|
         a.bundle_identifier == bundle_identifier
       end
 
-      app.first
+      apps.first
     end
 
     def filtered_versions_by_version_and_build(versions, version_filter, build_filter)

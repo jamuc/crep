@@ -10,9 +10,9 @@ module Crep
             @crash_source.configure(bundle_identifier)
         end
 
-        # returns list of top crashes
+        # returns list of top crashes for the given build
         def top_crashes(version, build)
-            $logger.debug("Showing top crashes for #{@crash_source.app.bundle_identifier}")
+            $logger.debug("Reporting top #{@top} crash groups for #{@crash_source.app.name} (#{version}/#{build}) #{@crash_source.app.bundle_identifier}")
             crashes = @crash_source.crashes(@top, version, build)
             show_crashes(crashes)
         end
