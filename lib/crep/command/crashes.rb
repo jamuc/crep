@@ -1,5 +1,6 @@
 require 'crep/command'
-require 'crep/crash_datasource'
+require 'crep/crash_controller'
+require 'crep/hockeyapp_crash_source'
 require 'hockeyapp'
 
 default_top_count = 5
@@ -34,8 +35,9 @@ module Crep
     end
 
     def run
-      crash_datasource = CrashDataSource.new
-      crash_datasource.crashes(@top, @app_title, @version, @build)
+      crash_datasource = HockeyAppCrashSource.new
+      crash_controller = CrashController.new(@app_title, @top, crash_datasource)
+      crash_controller.top_crashes(@version, @build)
     end
   end
 end
