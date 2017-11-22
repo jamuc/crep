@@ -21,7 +21,7 @@ module Crep
     DESC
 
     self.description = <<-DESC
-      Besides the optional `top` parameter, Crep requires the `bundle_identifier` parameter.
+      Besides the optional `top` parameter, Crep requires all other parameters.
     DESC
 
     def initialize(argv)
