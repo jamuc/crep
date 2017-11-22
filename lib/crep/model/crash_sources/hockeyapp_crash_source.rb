@@ -1,6 +1,8 @@
-require 'crep/crash_source'
+require 'crep/model/crash_sources/crash_source'
+require 'hockeyapp'
 
 module Crep
+  # The HockeyApp Crash Source
   class HockeyAppCrashSource < CrashSource
     def configure
       HockeyApp::Config.configure do |config|
@@ -29,26 +31,26 @@ module Crep
       unresolved_reasons.each do |reason|
         show_reason reason
       end
-      end
+    end
 
     def unresolved_reasons(reasons)
       reasons.select do |reason|
         reason.fixed == false
       end
-      end
+    end
 
     def show_reason(reason)
       $logger.debug("Number of crashes: #{reason.number_of_crashes}")
       $logger.debug("File/Line: #{reason.file}:#{reason.line}")
-      end
+    end
 
     def app(title)
       $logger.debug("Configuring Hockey for #{title}")
 
       apps = @client.get_apps
 
-      app = apps.select do |app|
-        app.title == title
+      app = apps.select do |a|
+        a.title == title
       end
 
       app.first

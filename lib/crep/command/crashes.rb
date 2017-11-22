@@ -1,6 +1,6 @@
 require 'crep/command'
 require 'crep/crash_controller'
-require 'crep/hockeyapp_crash_source'
+require 'crep/model/crash_sources/hockeyapp_crash_source'
 require 'hockeyapp'
 
 default_top_count = 5
