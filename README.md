@@ -4,7 +4,7 @@ Crep - a Crash Reporter for creating appealing Crash Newsletters
 
 ## Usage
 
-`bundle exec crep crashes --top=6 --app='XING' --version='7.9.0' --build='10011'`
+`bundle exec crep crashes --top=6 --identifier='com.xing.XING' --version='7.9.0' --build='10011'`
 
 ## Contributing
 
