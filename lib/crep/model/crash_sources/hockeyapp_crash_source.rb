@@ -1,24 +1,25 @@
 require 'crep/model/crash_sources/crash_source'
+require 'crep/model/crash_model/app'
 require 'hockeyapp'
 
 module Crep
   # The HockeyApp Crash Source
   class HockeyAppCrashSource < CrashSource
-    def configure
+    def configure(bundle_identifier)
       HockeyApp::Config.configure do |config|
         raise 'Missing API token (CREP_HOCKEY_API_TOKEN)' unless token = ENV['CREP_HOCKEY_API_TOKEN']
         config.token = token
       end
 
-      @client = HockeyApp.build_client
+      client = HockeyApp.build_client
+      @hockeyapp_app = hockeyapp(bundle_identifier, client)
+      @app = App.new(@hockeyapp_app.title, bundle_identifier)
     end
 
-    def crashes(top, app_title, version, build)
-      app = app(app_title)
+    def crashes(top, version, build)
+      $logger.debug("Fetching top #{top} crash groups for #{@app.bundle_identifier} (#{version}/#{build}) #{@hockeyapp_app.public_identifier}")
 
-      $logger.debug("Fetching top #{top} crash groups for #{app_title} (#{version}/#{build}) #{app.public_identifier}")
-
-      filtered_versions = filtered_versions_by_version_and_build(app.versions, version, build)
+      filtered_versions = filtered_versions_by_version_and_build(@hockeyapp_app.versions, version, build)
 
       version = filtered_versions.first
 
@@ -44,17 +45,17 @@ module Crep
       $logger.debug("File/Line: #{reason.file}:#{reason.line}")
     end
 
-    def app(title)
-      $logger.debug("Configuring Hockey for #{title}")
+    def hockeyapp(bundle_identifier, client)
+      $logger.debug("Configuring Hockey for #{bundle_identifier}")
 
-      apps = @client.get_apps
+      apps = client.get_apps
 
       app = apps.select do |a|
-        a.title == title
+        a.bundle_identifier == bundle_identifier
       end
 
       app.first
-      end
+    end
 
     def filtered_versions_by_version_and_build(versions, version_filter, build_filter)
       filtered_versions = versions.select do |version|
@@ -62,6 +63,6 @@ module Crep
       end
 
       filtered_versions
-      end
+    end
   end
 end
