@@ -6,6 +6,8 @@ module Crep
             @app_title = app_title
             @top = top
             @crash_source = crash_source
+
+            @crash_source.configure()
         end
 
         # returns list of top crashes
