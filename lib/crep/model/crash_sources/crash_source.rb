@@ -9,5 +9,9 @@ module Crep
     def configure(bundle_identifier)
       raise 'CrashSource subclass has to implement the `configure` method.'
     end
+
+    def crash_count(version:, build:)
+      raise 'CrashSource subclass has to implement the `crash_count` method.'
+    end
   end
 end

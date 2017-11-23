@@ -12,17 +12,23 @@ module Crep
         config.token = token
       end
 
-      client = HockeyApp.build_client
-      @hockeyapp_app = hockeyapp(bundle_identifier, client)
+      @client = HockeyApp.build_client
+      @hockeyapp_app = hockeyapp(bundle_identifier, @client)
       @app = App.new(@hockeyapp_app.title, bundle_identifier)
     end
 
     def crashes(top, version, build)
-      filtered_versions = filtered_versions_by_version_and_build(@hockeyapp_app.versions, version, build)
-
-      version = filtered_versions.first
+      version = version(version: version, build: build)
 
       crash_groups(version).take(top.to_i)
+    end
+
+    def crash_count(version:, build:)
+      statistics = @client.get_statistics @hockeyapp_app
+      statistics_filtered_by_version = statistics.select do |statistic|
+        statistic.shortversion == version && statistic.version == build
+      end
+      statistics_filtered_by_version.first.crashes
     end
 
     def crash_groups(version)
@@ -34,6 +40,14 @@ module Crep
                   reason: reason.reason,
                   crash_class: reason.crash_class)
       end
+    end
+
+    def version(version:, build:)
+      filtered_versions = filtered_versions_by_version_and_build(@hockeyapp_app.versions, version, build)
+
+      raise "No version was found for #{version})#{build})" unless filtered_versions.count > 0
+
+      filtered_versions.first
     end
 
     def unresolved_reasons(reasons)
