@@ -10,31 +10,50 @@ module Crep
 
     # returns list of top crashes for the given build
     def top_crashes(version, build)
-      XINGLogger.debug("Reporting top #{@top} crash groups for #{@crash_source.app.name} (#{version}/#{build}) #{@crash_source.app.bundle_identifier}")
       crashes = @crash_source.crashes(@top, version, build)
 
       total_crashes = @crash_source.crash_count(version: version,
                                                 build: build)
-      show_crashes(crashes: crashes, total_crashes: total_crashes)
+      report(crashes: crashes,
+             total_crashes: total_crashes,
+             app_name: @crash_source.app.name,
+             identifier: @crash_source.app.bundle_identifier,
+             version: version,
+             build: build)
     end
 
-    def show_crashes(crashes:, total_crashes:)
-      crashes.each do |crash|
+    def report(crashes:, total_crashes:, app_name:, identifier:, version:, build:)
+      puts("Reporting for #{app_name} (#{version}/#{build}) #{identifier}")
+
+      crash_reports = crashes_report(crashes: crashes, total_crashes: total_crashes, version:version)
+      crash_reports.each { |crash_report|
+        puts("----------------------------")
+        crash_report.each { |line|
+          puts(line)
+        }
+      }
+
+    end
+
+    def crashes_report(crashes:, total_crashes:, version:)
+      crashes.map { |crash|
         percentage = crash_percentage(crash: crash, total_crashes: total_crashes)
-        show_crash(crash: crash, percentage: percentage)
-      end
+        crash_report(crash: crash, percentage: percentage, version: version)
+      }
     end
 
     def crash_percentage(crash:, total_crashes:)
       crash.occurrences.to_f / total_crashes.to_f * 100.0
     end
 
-    def show_crash(crash:, percentage:)
-      XINGLogger.debug("Class: #{crash.crash_class}")
-      XINGLogger.debug("Occurrences: #{crash.occurrences}")
-      XINGLogger.debug("Percentage: #{percentage}")
-      XINGLogger.debug("File/Line: #{crash.file_line}")
-      XINGLogger.debug("Reason: #{crash.reason[0..80]}")
+    def crash_report(crash:, percentage:, version:)
+      report = []
+      report.push "Class: #{crash.crash_class}"
+      report.push "Occurrences: #{crash.occurrences}"
+      report.push "Percentage: #{percentage.round(2)}% of all #{version} crashes"
+      report.push"File/Line: #{crash.file_line}"
+      report.push"Reason: #{crash.reason}" #crash.reason[0..80]
+      report
       end
   end
 end
