@@ -26,8 +26,9 @@ module Crep
       puts("Reporting for #{app_name} (#{version}/#{build}) #{identifier}")
 
       crash_reports = crashes_report(crashes: crashes, total_crashes: total_crashes, version:version)
-      crash_reports.each { |crash_report|
-        puts("----------------------------")
+      crash_reports.each_with_index { |crash_report, i|
+        puts ""
+        puts("------------- ##{(i+1).to_s} --------------")
         crash_report.each { |line|
           puts(line)
         }
