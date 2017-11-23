@@ -47,10 +47,11 @@ module Crep
     def crash_report(crash:, percentage:, version:)
       report = []
       report.push "Class: #{crash.crash_class}"
-      report.push "Occurrences: #{crash.occurrences}"
+      report.push "First appeared at #{crash.registered_at} and occurred #{crash.occurrences} times in #{version}"
       report.push "Percentage: #{percentage.round(2)}% of all #{version} crashes"
-      report.push"File/Line: #{crash.file_line}"
-      report.push"Reason: #{crash.reason}"
+      report.push "File/Line: #{crash.file_line}"
+      report.push "Reason: #{crash.reason}"
+      report.push "Link: #{crash.url}"
       report
       end
   end
