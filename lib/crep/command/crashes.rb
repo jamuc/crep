@@ -5,7 +5,7 @@ require 'hockeyapp'
 
 module Crep
   class Crashes < Command
-    @default_top_count = 5
+    CrepDefaultTopCount = 5
 
     def self.options
       [
@@ -25,7 +25,8 @@ module Crep
     DESC
 
     def initialize(argv)
-      @top = argv.option('top') || Crashes.default_top_count
+      @top = argv.option('top')
+      @top ||= CrepDefaultTopCount
       raise 'Missing `identifier` parameter' unless @bundle_identifier = argv.option('identifier')
       raise 'Missing `version` parameter' unless @version = argv.option('version')
       raise 'Missing `build` parameter' unless @build = argv.option('build')
