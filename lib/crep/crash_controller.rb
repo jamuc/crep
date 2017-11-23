@@ -1,21 +1,18 @@
 module Crep
+  class CrashController
+    def initialize(bundle_identifier, top, crash_source)
+      @bundle_identifier = bundle_identifier
+      @top = top
+      @crash_source = crash_source
 
-    class CrashController
+      @crash_source.configure(bundle_identifier)
+    end
 
-        def initialize(bundle_identifier, top, crash_source)
-            @bundle_identifier = bundle_identifier
-            @top = top
-            @crash_source = crash_source
+    # returns list of top crashes for the given build
+    def top_crashes(version, build)
+      XINGLogger.debug("Reporting top #{@top} crash groups for #{@crash_source.app.name} (#{version}/#{build}) #{@crash_source.app.bundle_identifier}")
+      crashes = @crash_source.crashes(@top, version, build)
 
-            @crash_source.configure(bundle_identifier)
-        end
-
-        # returns list of top crashes for the given build
-        def top_crashes(version, build)
-            XINGLogger.debug("Reporting top #{@top} crash groups for #{@crash_source.app.name} (#{version}/#{build}) #{@crash_source.app.bundle_identifier}")
-            crashes = @crash_source.crashes(@top, version, build)
-            show_crashes(crashes)
-        end
 
         def show_crashes(crashes)
             crashes.each do |crash|
