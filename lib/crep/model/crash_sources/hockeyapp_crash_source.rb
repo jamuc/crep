@@ -1,5 +1,6 @@
 require 'crep/model/crash_sources/crash_source'
 require 'crep/model/crash_model/app'
+require 'crep/model/crash_model/crash'
 require 'hockeyapp'
 
 module Crep
@@ -11,27 +12,42 @@ module Crep
         config.token = token
       end
 
-      client = HockeyApp.build_client
-      @hockeyapp_app = hockeyapp(bundle_identifier, client)
+      @client = HockeyApp.build_client
+      @hockeyapp_app = hockeyapp(bundle_identifier, @client)
       @app = App.new(@hockeyapp_app.title, bundle_identifier)
     end
 
     def crashes(top, version, build)
-      $logger.debug("Fetching top #{top} crash groups for #{@app.bundle_identifier} (#{version}/#{build}) #{@hockeyapp_app.public_identifier}")
+      version = version(version: version, build: build)
 
-      filtered_versions = filtered_versions_by_version_and_build(@hockeyapp_app.versions, version, build)
-
-      version = filtered_versions.first
-
-      show_version_info(version, top)
+      crash_groups(version).take(top.to_i)
     end
 
-    def show_version_info(version, top)
-      reasons = version.crash_reasons ({ 'sort' => 'number_of_crashes', 'order' => 'desc' })
-      unresolved_reasons = unresolved_reasons(reasons).take(top.to_i)
-      unresolved_reasons.each do |reason|
-        show_reason reason
+    def crash_count(version:, build:)
+      statistics = @client.get_statistics @hockeyapp_app
+      statistics_filtered_by_version = statistics.select do |statistic|
+        statistic.shortversion == version && statistic.version == build
       end
+      statistics_filtered_by_version.first.crashes
+    end
+
+    def crash_groups(version)
+      reasons = version.crash_reasons ({ 'sort' => 'number_of_crashes', 'order' => 'desc' })
+      unresolved_reasons = unresolved_reasons(reasons)
+      crash_groups = unresolved_reasons.map do |reason|
+        Crash.new(file_line: "#{reason.file}:#{reason.line}",
+                  occurrences: reason.number_of_crashes,
+                  reason: reason.reason,
+                  crash_class: reason.crash_class)
+      end
+    end
+
+    def version(version:, build:)
+      filtered_versions = filtered_versions_by_version_and_build(@hockeyapp_app.versions, version, build)
+
+      raise "No version was found for #{version})#{build})" unless filtered_versions.count > 0
+
+      filtered_versions.first
     end
 
     def unresolved_reasons(reasons)
@@ -40,21 +56,13 @@ module Crep
       end
     end
 
-    def show_reason(reason)
-      $logger.debug("Number of crashes: #{reason.number_of_crashes}")
-      $logger.debug("File/Line: #{reason.file}:#{reason.line}")
-    end
-
     def hockeyapp(bundle_identifier, client)
-      $logger.debug("Configuring Hockey for #{bundle_identifier}")
-
-      apps = client.get_apps
-
-      app = apps.select do |a|
+      all_apps = client.get_apps
+      apps = all_apps.select do |a|
         a.bundle_identifier == bundle_identifier
       end
 
-      app.first
+      apps.first
     end
 
     def filtered_versions_by_version_and_build(versions, version_filter, build_filter)
