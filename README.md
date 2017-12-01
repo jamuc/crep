@@ -1,18 +1,14 @@
 # crep
 
+Crep - a Crash Reporter for creating appealing Crash Newsletters
+
 ## Usage
 
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-Crep - a Crash Reporter for creating appealing Crash Newsletters
+`bundle exec crep crashes --top=6 --identifier='com.xing.XING' --version='7.9.0' --build='10011'`
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/crep.
+Bug reports and pull requests are welcome on GitHub at https://source.xing.com/mobile-releases/crep.
 
 ## License
 

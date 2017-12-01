@@ -5,8 +5,8 @@ require 'logger'
 
 module Crep
 
-  $logger = Logger.new(STDOUT)
-  $logger.level = Logger::DEBUG
+  XINGLogger = Logger.new(STDOUT)
+  XINGLogger.level = Logger::DEBUG
 
   def self.run
 
