@@ -53,8 +53,8 @@ module Crep
       report.push "Class: #{crash.crash_class}"
       report.push "Occurrences: #{crash.occurrences}"
       report.push "Percentage: #{percentage.round(2)}% of all #{version} crashes"
-      report.push"File/Line: #{crash.file_line}"
-      report.push"Reason: #{crash.reason}" #crash.reason[0..80]
+      report.push "File/Line: #{crash.file_line}"
+      report.push "Reason: #{crash.reason}" #crash.reason[0..80]
       report
       end
   end
