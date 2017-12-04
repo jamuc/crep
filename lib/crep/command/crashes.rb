@@ -12,7 +12,8 @@ module Crep
         ['--top=5', "If set, Crep will show the top x crashes. #{default_top_count} by default."],
         ['--identifier=<com.company.app>', 'Crep will show crashes for the app with this bundle identifier'],
         ['--version=<7.10.0>', 'The version of the App.'],
-        ['--build=<24>', 'The Build number of the App.']
+        ['--build=<24>', 'The Build number of the App.'],
+        ['--only-unresolved', 'If set, resolved crashes will be filtered out.']
       ].concat(super)
     end
 
@@ -25,6 +26,7 @@ module Crep
     DESC
 
     def initialize(argv)
+      @show_only_unresolved = argv.flag?('only-unresolved', false)
       @top = argv.option('top') || Crashes.default_top_count
       raise 'Missing `identifier` parameter' unless @bundle_identifier = argv.option('identifier')
       raise 'Missing `version` parameter' unless @version = argv.option('version')
@@ -34,7 +36,7 @@ module Crep
 
     def run
       crash_datasource = HockeyAppCrashSource.new
-      crash_controller = CrashController.new(@bundle_identifier, @top, crash_datasource)
+      crash_controller = CrashController.new(@bundle_identifier, @top, crash_datasource, @show_only_unresolved)
       crash_controller.top_crashes(@version, @build)
     end
   end

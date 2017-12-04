@@ -1,16 +1,17 @@
 module Crep
   class CrashController
-    def initialize(bundle_identifier, top, crash_source)
+    def initialize(bundle_identifier, top, crash_source, show_only_unresolved)
       @bundle_identifier = bundle_identifier
       @top = top
       @crash_source = crash_source
+      @show_only_unresolved = show_only_unresolved
 
       @crash_source.configure(bundle_identifier)
     end
 
     # returns list of top crashes for the given build
     def top_crashes(version, build)
-      crashes = @crash_source.crashes(@top, version, build)
+      crashes = @crash_source.crashes(@top, version, build, @show_only_unresolved)
 
       total_crashes = @crash_source.crash_count(version: version,
                                                 build: build)
