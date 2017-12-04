@@ -14,7 +14,7 @@ module Crep
       raise 'CrashSource subclass has to implement the `crash_count` method.'
     end
 
-    def crashes(top, version, build)
+    def crashes(top, version, build, show_only_unresolved)
       raise 'CrashSource subclass has to implement the `crashes` method.'
     end
   end
