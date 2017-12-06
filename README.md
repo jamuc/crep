@@ -6,7 +6,7 @@ Crep - a Crash Reporter for creating appealing Crash Newsletters
 
 `bundle exec crep crashes --identifier='com.xing.XING' --version='7.9.0' --build='10011' --only-unresolved`
 
-The \`--only-unresolved\` flag filters out any crashes marked as resolved.
+The `--only-unresolved` flag filters out any crashes marked as resolved.
 
 ## Contributing
 
