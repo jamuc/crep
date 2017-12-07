@@ -10,7 +10,7 @@ The `--only-unresolved` flag filters out any crashes marked as resolved.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://source.xing.com/mobile-releases/crep.
+Bug reports and pull requests are most welcome!
 
 ## License
 
