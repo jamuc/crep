@@ -35,7 +35,7 @@ module Crep
       reasons = version.crash_reasons ({ 'sort' => 'number_of_crashes', 'order' => 'desc' })
       reasons = version.crash_reasons('sort' => 'number_of_crashes', 'order' => 'desc')
       unresolved_reasons = show_only_unresolved ? unresolved_reasons(reasons) : reasons
-      crash_groups = unresolved_reasons.map do |reason|
+      unresolved_reasons.map do |reason|
         Crash.new(file_line: "#{reason.file}:#{reason.line}",
                   occurrences: reason.number_of_crashes,
                   reason: reason.reason,

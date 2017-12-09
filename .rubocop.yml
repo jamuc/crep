@@ -14,10 +14,6 @@ Lint/AssignmentInCondition:
     - 'lib/crep/model/crash_sources/hockeyapp_crash_source.rb'
 
 
-# Offense count: 1
-Lint/UselessAssignment:
-  Exclude:
-    - 'lib/crep/model/crash_sources/hockeyapp_crash_source.rb'
 
 # Offense count: 20
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
