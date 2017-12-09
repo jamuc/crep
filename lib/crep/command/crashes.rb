@@ -27,9 +27,9 @@ module Crep
       @show_only_unresolved = argv.flag?('only-unresolved', false)
       @top = argv.option('top')
       @top ||= default_top_count
-      raise 'Missing `identifier` parameter' unless @bundle_identifier = argv.option('identifier')
-      raise 'Missing `version` parameter' unless @version = argv.option('version')
-      raise 'Missing `build` parameter' unless @build = argv.option('build')
+      raise 'Missing `identifier` parameter' unless @bundle_identifier == argv.option('identifier')
+      raise 'Missing `version` parameter' unless @version == argv.option('version')
+      raise 'Missing `build` parameter' unless @build == argv.option('build')
       super
     end
 
