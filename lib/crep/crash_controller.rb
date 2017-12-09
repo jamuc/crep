@@ -5,14 +5,12 @@ module Crep
       @top = top
       @crash_source = crash_source
       @show_only_unresolved = show_only_unresolved
-
       @crash_source.configure(bundle_identifier)
     end
 
     # returns list of top crashes for the given build
     def top_crashes(version, build)
       crashes = @crash_source.crashes(@top, version, build, @show_only_unresolved)
-
       total_crashes = @crash_source.crash_count(version: version,
                                                 build: build)
       report(crashes: crashes,
@@ -28,8 +26,7 @@ module Crep
 
       crash_reports = crashes_report(crashes: crashes, total_crashes: total_crashes, version: version)
       crash_reports.each_with_index do |crash_report, i|
-        puts ''
-        puts("------------- ##{(i + 1)} --------------")
+        puts("\n------------- ##{(i + 1)} --------------")
         crash_report.each do |line|
           puts(line)
         end
