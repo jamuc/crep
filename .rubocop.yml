@@ -6,33 +6,12 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 4
-# Configuration parameters: AllowSafeAssignment.
-Lint/AssignmentInCondition:
-  Exclude:
-    - 'lib/crep/command/crashes.rb'
-    - 'lib/crep/model/crash_sources/hockeyapp_crash_source.rb'
-
-
-
-# Offense count: 20
-# Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
-# URISchemes: http, https
 Metrics/LineLength:
-  Max: 111
+  Enabled: false
 
-# Offense count: 1
-# Configuration parameters: CountKeywordArgs.
 Metrics/ParameterLists:
-  Max: 6
+  Enabled: false
 
-# Offense count: 5
 Style/Documentation:
-  Exclude:
-    - 'spec/**/*'
-    - 'test/**/*'
-    - 'lib/crep.rb'
-    - 'lib/crep/command.rb'
-    - 'lib/crep/command/crashes.rb'
-    - 'lib/crep/crash_controller.rb'
-    - 'lib/crep/model/crash_model/crash.rb'
+  Enabled: false
+
