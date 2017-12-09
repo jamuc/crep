@@ -32,7 +32,6 @@ module Crep
     end
 
     def crash_groups(version, show_only_unresolved)
-      reasons = version.crash_reasons ({ 'sort' => 'number_of_crashes', 'order' => 'desc' })
       reasons = version.crash_reasons('sort' => 'number_of_crashes', 'order' => 'desc')
       unresolved_reasons = show_only_unresolved ? unresolved_reasons(reasons) : reasons
       unresolved_reasons.map do |reason|
