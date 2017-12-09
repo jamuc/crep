@@ -13,13 +13,6 @@ Lint/AssignmentInCondition:
     - 'lib/crep/command/crashes.rb'
     - 'lib/crep/model/crash_sources/hockeyapp_crash_source.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyleAlignWith, SupportedStylesAlignWith, AutoCorrect.
-# SupportedStylesAlignWith: start_of_line, def
-Lint/DefEndAlignment:
-  Exclude:
-    - 'lib/crep/crash_controller.rb'
 
 # Offense count: 1
 Lint/ParenthesesAsGroupedExpression:
