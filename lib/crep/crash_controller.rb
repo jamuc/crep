@@ -26,22 +26,21 @@ module Crep
     def report(crashes:, total_crashes:, app_name:, identifier:, version:, build:)
       puts("Reporting for #{app_name} (#{version}/#{build}) #{identifier}")
 
-      crash_reports = crashes_report(crashes: crashes, total_crashes: total_crashes, version:version)
-      crash_reports.each_with_index { |crash_report, i|
-        puts ""
-        puts("------------- ##{(i+1).to_s} --------------")
-        crash_report.each { |line|
+      crash_reports = crashes_report(crashes: crashes, total_crashes: total_crashes, version: version)
+      crash_reports.each_with_index do |crash_report, i|
+        puts ''
+        puts("------------- ##{(i + 1)} --------------")
+        crash_report.each do |line|
           puts(line)
-        }
-      }
-
+        end
+      end
     end
 
     def crashes_report(crashes:, total_crashes:, version:)
-      crashes.map { |crash|
+      crashes.map do |crash|
         percentage = crash_percentage(crash: crash, total_crashes: total_crashes)
         crash_report(crash: crash, percentage: percentage, version: version)
-      }
+      end
     end
 
     def crash_percentage(crash:, total_crashes:)
@@ -54,7 +53,7 @@ module Crep
       report.push "Occurrences: #{crash.occurrences}"
       report.push "Percentage: #{percentage.round(2)}% of all #{version} crashes"
       report.push "File/Line: #{crash.file_line}"
-      report.push "Reason: #{crash.reason}" #crash.reason[0..80]
+      report.push "Reason: #{crash.reason}" # crash.reason[0..80]
       report
       end
   end
