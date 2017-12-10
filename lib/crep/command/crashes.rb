@@ -9,7 +9,7 @@ module Crep
 
     def self.options
       [
-        ['--top=5', "If set, Crep will show the top x crashes. #{default_top_count} by default."],
+        ['--top=5', "If set, Crep will show the top x crashes. #{DEFAULT_TOP_COUNT} by default."],
         ['--identifier=<com.company.app>', 'Crep will show crashes for the app with this bundle identifier'],
         ['--version=<7.10.0>', 'The version of the App.'],
         ['--build=<24>', 'The Build number of the App.'],
