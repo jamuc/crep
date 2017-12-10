@@ -8,8 +8,8 @@ module Crep
   class HockeyAppCrashSource < CrashSource
     def configure(bundle_identifier)
       HockeyApp::Config.configure do |config|
-        raise 'Missing API token (CREP_HOCKEY_API_TOKEN)' unless token == ENV['CREP_HOCKEY_API_TOKEN']
-        config.token = token
+        raise 'Missing API token (CREP_HOCKEY_API_TOKEN)' unless ENV['CREP_HOCKEY_API_TOKEN']
+        config.token = ENV['CREP_HOCKEY_API_TOKEN']
       end
 
       @client = HockeyApp.build_client
