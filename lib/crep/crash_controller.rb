@@ -55,6 +55,6 @@ module Crep
       report.push "File/Line: #{crash.file_line}"
       report.push "Reason: #{crash.reason}" # crash.reason[0..80]
       report
-      end
+    end
   end
 end
