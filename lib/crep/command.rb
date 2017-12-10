@@ -2,9 +2,7 @@ require 'claide'
 require 'crep/version'
 
 module Crep
-
   class Command < CLAide::Command
-
     require 'crep/command/crashes'
 
     self.abstract_command = true
