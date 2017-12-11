@@ -54,7 +54,44 @@ RSpec.describe Crep::CrashController do
 
     it 'should receive array of crashes and return result' do
       result = subject.new.crashes_report(crashes: [crash_instance, crash_instance_2], total_crashes: 150, version: '0.0.1')
-      expect(result).to eql([["Class: SomeWeirdClass", "Occurrences: 50", "Percentage: 33.33% of all 0.0.1 crashes", "File/Line: line:123", "Reason: Unknown"], ["Class: SomeOtherClass", "Occurrences: 50", "Percentage: 33.33% of all 0.0.1 crashes", "File/Line: line:123", "Reason: Unknown"]])
+      expect(result).to eql([['Class: SomeWeirdClass', 'Occurrences: 50', 'Percentage: 33.33% of all 0.0.1 crashes', 'File/Line: line:123', 'Reason: Unknown'], ['Class: SomeOtherClass', 'Occurrences: 50', 'Percentage: 33.33% of all 0.0.1 crashes', 'File/Line: line:123', 'Reason: Unknown']])
+    end
+  end
+
+  describe 'report' do
+    let(:line) { 'line:123' }
+    let(:crash_occurances) { 50 }
+    let(:crash_occurances_2) { 100 }
+    let(:crash_reason) { 'Unknown' }
+    let(:crash_class_) { 'SomeWeirdClass' }
+    let(:crash_class_2) { 'SomeOtherClass' }
+    let(:crash_instance) { Crep::Crash.new(file_line: line, occurrences: crash_occurances, reason: crash_reason, crash_class: crash_class_) }
+    let(:crash_instance_2) { Crep::Crash.new(file_line: line, occurrences: crash_occurances_2, reason: crash_reason, crash_class: crash_class_2) }
+    let(:expected_output) do
+      "Reporting for name (0.1.14/5) identifier.app\n
+------------- #1 --------------
+Class: SomeWeirdClass
+Occurrences: 50
+Percentage: 12.5% of all 0.1.14 crashes
+File/Line: line:123
+Reason: Unknown\n
+------------- #2 --------------
+Class: SomeOtherClass
+Occurrences: 100
+Percentage: 25.0% of all 0.1.14 crashes
+File/Line: line:123
+Reason: Unknown\n"
+    end
+
+    it 'should output the result' do
+      expect do
+        subject.new.report(crashes: [crash_instance, crash_instance_2], total_crashes: 400, app_name: 'name', identifier: 'identifier.app', version: '0.1.14', build: 5)
+      end.to output(expected_output).to_stdout
+    end
+
+    it 'should receive array of crashes and return result' do
+      result = subject.new.report(crashes: [crash_instance, crash_instance_2], total_crashes: 400, app_name: 'name', identifier: 'identifier.app', version: '0.1.14', build: 5)
+      expect(result).to eql([['Class: SomeWeirdClass', 'Occurrences: 50', 'Percentage: 12.5% of all 0.1.14 crashes', 'File/Line: line:123', 'Reason: Unknown'], ['Class: SomeOtherClass', 'Occurrences: 100', 'Percentage: 25.0% of all 0.1.14 crashes', 'File/Line: line:123', 'Reason: Unknown']])
     end
   end
 end
