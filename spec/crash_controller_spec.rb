@@ -67,21 +67,7 @@ RSpec.describe Crep::CrashController do
     let(:crash_class_2) { 'SomeOtherClass' }
     let(:crash_instance) { Crep::Crash.new(file_line: line, occurrences: crash_occurances, reason: crash_reason, crash_class: crash_class_) }
     let(:crash_instance_2) { Crep::Crash.new(file_line: line, occurrences: crash_occurances_2, reason: crash_reason, crash_class: crash_class_2) }
-    let(:expected_output) do
-      "Reporting for name (0.1.14/5) identifier.app\n
-------------- #1 --------------
-Class: SomeWeirdClass
-Occurrences: 50
-Percentage: 12.5% of all 0.1.14 crashes
-File/Line: line:123
-Reason: Unknown\n
-------------- #2 --------------
-Class: SomeOtherClass
-Occurrences: 100
-Percentage: 25.0% of all 0.1.14 crashes
-File/Line: line:123
-Reason: Unknown\n"
-    end
+    let(:expected_output) { File.read("spec/fixtures/report_output.txt") }
 
     it 'should output the result' do
       expect do
@@ -105,21 +91,7 @@ Reason: Unknown\n"
     let(:crash_class_2) { 'SomeOtherClass' }
     let(:crash_instance) { Crep::Crash.new(file_line: line, occurrences: crash_occurances, reason: crash_reason, crash_class: crash_class_) }
     let(:crash_instance_2) { Crep::Crash.new(file_line: line, occurrences: crash_occurances_2, reason: crash_reason, crash_class: crash_class_2) }
-    let(:expected_output) do
-      "Reporting for app_name (0.1.19/1114) bundle.id\n
-------------- #1 --------------
-Class: SomeWeirdClass
-Occurrences: 50
-Percentage: 33.33% of all 0.1.19 crashes
-File/Line: line:123
-Reason: Unknown\n
-------------- #2 --------------
-Class: SomeOtherClass
-Occurrences: 100
-Percentage: 66.67% of all 0.1.19 crashes
-File/Line: line:123
-Reason: Unknown\n"
-    end
+    let(:expected_output) { File.read("spec/fixtures/top_crashes_output.txt") }
 
     before do
       allow(@crash_source).to receive(:crashes).and_return([crash_instance, crash_instance_2])
