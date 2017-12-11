@@ -17,10 +17,10 @@ module Crep
       @app = App.new(@hockeyapp_app.title, bundle_identifier)
     end
 
-    def crashes(top, version, build)
+    def crashes(top, version, build, show_only_unresolved)
       version = version(version: version, build: build)
 
-      crash_groups(version).take(top.to_i)
+      crash_groups(version, show_only_unresolved).take(top.to_i)
     end
 
     def crash_count(version:, build:)
@@ -31,11 +31,11 @@ module Crep
       statistics_filtered_by_version.first.crashes
     end
 
-    def crash_groups(version)
+    def crash_groups(version, show_only_unresolved)
       reasons = version.crash_reasons ({ 'sort' => 'number_of_crashes', 'order' => 'desc' })
-      unresolved_reasons = unresolved_reasons(reasons)
-      unresolved_reasons.map do |reason|
-        url = url(app_id: reason.app.public_identifier, version_id: version.id, reason_id: reason.id)
+      unresolved_reasons = show_only_unresolved ? unresolved_reasons(reasons) : reasons
+      crash_groups = unresolved_reasons.map do |reason|
+      url = url(app_id: reason.app.public_identifier, version_id: version.id, reason_id: reason.id)
         Crash.new(file_line: "#{reason.file}:#{reason.line}",
                   occurrences: reason.number_of_crashes,
                   reason: reason.reason,
