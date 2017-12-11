@@ -49,6 +49,7 @@ module Crep
     end
 
     def crash_report(crash:, percentage:, version:)
+      raise 'Crash info does not fulfill the requirements' unless crash.is_a? Crep::Crash
       report = []
       report.push "Class: #{crash.crash_class}"
       report.push "Occurrences: #{crash.occurrences}"
