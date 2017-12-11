@@ -43,6 +43,18 @@ RSpec.describe Crep::CrashController do
     end
   end
 
-  describe 'crash_report' do
+  describe 'crashes_report' do
+    let(:line) { 'line:123' }
+    let(:crash_occurances) { 50 }
+    let(:crash_reason) { 'Unknown' }
+    let(:crash_class_) { 'SomeWeirdClass' }
+    let(:crash_class_2) { 'SomeOtherClass' }
+    let(:crash_instance) { Crep::Crash.new(file_line: line, occurrences: crash_occurances, reason: crash_reason, crash_class: crash_class_) }
+    let(:crash_instance_2) { Crep::Crash.new(file_line: line, occurrences: crash_occurances, reason: crash_reason, crash_class: crash_class_2) }
+
+    it 'should receive array of crashes and return result' do
+      result = subject.new.crashes_report(crashes: [crash_instance, crash_instance_2], total_crashes: 150, version: '0.0.1')
+      expect(result).to eql([["Class: SomeWeirdClass", "Occurrences: 50", "Percentage: 33.33% of all 0.0.1 crashes", "File/Line: line:123", "Reason: Unknown"], ["Class: SomeOtherClass", "Occurrences: 50", "Percentage: 33.33% of all 0.0.1 crashes", "File/Line: line:123", "Reason: Unknown"]])
+    end
   end
 end
