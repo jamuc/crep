@@ -19,7 +19,6 @@ module Crep
 
     def crashes(top, version, build, show_only_unresolved)
       version = version(version: version, build: build)
-
       crash_groups(version, show_only_unresolved).take(top.to_i)
     end
 
@@ -51,26 +50,21 @@ module Crep
     end
 
     def unresolved_reasons(reasons)
-      reasons.select do |reason|
-        reason.fixed == false
-      end
+      reasons.reject(&:fixed)
     end
 
     def hockeyapp(bundle_identifier, client)
       all_apps = client.get_apps
-      apps = all_apps.select do |a|
-        a.bundle_identifier == bundle_identifier
+      apps = all_apps.select do |app|
+        app.bundle_identifier == bundle_identifier
       end
-
       apps.first
     end
 
     def filtered_versions_by_version_and_build(versions, version_filter, build_filter)
-      filtered_versions = versions.select do |version|
-        version.shortversion == version_filter && version.version == build_filter
+      versions.select do |version|
+        (version.shortversion == version_filter) && (version.version == build_filter)
       end
-
-      filtered_versions
     end
   end
 end
