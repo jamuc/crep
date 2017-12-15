@@ -10,17 +10,19 @@ RSpec.describe Crep::CrashController do
   describe 'crash_report' do
     let(:crash_controller) { subject.new }
     let(:line) { 'line:123' }
-    let(:crash_occurances) { 125 }
+    let(:crash_occurrences) { 125 }
+    let(:crash_date) { Date.parse('2017-07-14') }
+    let(:crash_url) { 'https://my.crash.url' }
     let(:crash_reason) { 'Unknown' }
     let(:crash_class_) { 'SomeWeirdClass' }
-    let(:crash_instance) { Crep::Crash.new(file_line: line, occurrences: crash_occurances, reason: crash_reason, crash_class: crash_class_) }
+    let(:crash_instance) { Crep::Crash.new(file_line: line, occurrences: crash_occurrences, reason: crash_reason, crash_class: crash_class_, registered_at: crash_date, url: crash_url) }
     let(:random_array) { %w[some random array] }
     let(:crash_percentage) { 5.124 }
     let(:app_version) { '1.0.19' }
 
     it 'should return a correct result' do
       result = crash_controller.crash_report(crash: crash_instance, percentage: crash_percentage, version: app_version)
-      expect(result).to eql(["Class: #{crash_class_}", "Occurrences: #{crash_occurances}", "Percentage: #{crash_percentage.round(2)}% of all #{app_version} crashes", "File/Line: #{line}", "Reason: #{crash_reason}"])
+      expect(result).to eql(["Class: #{crash_class_}", "First appeared at #{crash_date} and occurred #{crash_occurrences} times in #{app_version}", "Percentage: #{crash_percentage.round(2)}% of all #{app_version} crashes", "File/Line: #{line}", "Reason: #{crash_reason}", "Link: #{crash_url}"])
     end
 
     it 'should raise when crash is not defined correctly' do
@@ -67,7 +69,7 @@ RSpec.describe Crep::CrashController do
     let(:crash_class_2) { 'SomeOtherClass' }
     let(:crash_instance) { Crep::Crash.new(file_line: line, occurrences: crash_occurances, reason: crash_reason, crash_class: crash_class_) }
     let(:crash_instance_2) { Crep::Crash.new(file_line: line, occurrences: crash_occurances_2, reason: crash_reason, crash_class: crash_class_2) }
-    let(:expected_output) { File.read("spec/fixtures/report_output.txt") }
+    let(:expected_output) { File.read('spec/fixtures/report_output.txt') }
 
     it 'should output the result' do
       expect do
@@ -91,7 +93,7 @@ RSpec.describe Crep::CrashController do
     let(:crash_class_2) { 'SomeOtherClass' }
     let(:crash_instance) { Crep::Crash.new(file_line: line, occurrences: crash_occurances, reason: crash_reason, crash_class: crash_class_) }
     let(:crash_instance_2) { Crep::Crash.new(file_line: line, occurrences: crash_occurances_2, reason: crash_reason, crash_class: crash_class_2) }
-    let(:expected_output) { File.read("spec/fixtures/top_crashes_output.txt") }
+    let(:expected_output) { File.read('spec/fixtures/top_crashes_output.txt') }
 
     before do
       allow(@crash_source).to receive(:crashes).and_return([crash_instance, crash_instance_2])

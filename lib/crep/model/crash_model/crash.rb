@@ -1,6 +1,5 @@
 module Crep
   class Crash
-
     attr_reader :file_line, :occurrences, :reason, :crash_class, :registered_at, :url
 
     def initialize(file_line:, occurrences:, reason:, crash_class:, registered_at:, url:)
