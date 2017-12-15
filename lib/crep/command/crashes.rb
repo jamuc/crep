@@ -5,9 +5,11 @@ require 'hockeyapp'
 
 module Crep
   class Crashes < Command
+    DEFAULT_TOP_COUNT = 5
+
     def self.options
       [
-        ['--top=5', "If set, Crep will show the top x crashes. #{default_top_count} by default."],
+        ['--top=5', "If set, Crep will show the top x crashes. #{DEFAULT_TOP_COUNT} by default."],
         ['--identifier=<com.company.app>', 'Crep will show crashes for the app with this bundle identifier'],
         ['--version=<7.10.0>', 'The version of the App.'],
         ['--build=<24>', 'The Build number of the App.'],
@@ -25,16 +27,11 @@ module Crep
 
     def initialize(argv)
       @show_only_unresolved = argv.flag?('only-unresolved', false)
-      @top = argv.option('top')
-      @top ||= default_top_count
-      raise 'Missing `identifier` parameter' unless @bundle_identifier = argv.option('identifier')
-      raise 'Missing `version` parameter' unless @version = argv.option('version')
-      raise 'Missing `build` parameter' unless @build = argv.option('build')
+      @top = argv.option('top') || DEFAULT_TOP_COUNT
+      @bundle_identifier = argv.option('identifier') || raise('Missing `identifier` parameter')
+      @version = argv.option('version') || raise('Missing `version` parameter')
+      @build = argv.option('build') || raise('Missing `build` parameter')
       super
-    end
-
-    def default_top_count
-      5
     end
 
     def run

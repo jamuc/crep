@@ -5,14 +5,12 @@ module Crep
       @top = top
       @crash_source = crash_source
       @show_only_unresolved = show_only_unresolved
-
       @crash_source.configure(bundle_identifier)
     end
 
     # returns list of top crashes for the given build
     def top_crashes(version, build)
       crashes = @crash_source.crashes(@top, version, build, @show_only_unresolved)
-
       total_crashes = @crash_source.crash_count(version: version,
                                                 build: build)
       report(crashes: crashes,
@@ -28,9 +26,10 @@ module Crep
 
       crash_reports = crashes_report(crashes: crashes, total_crashes: total_crashes, version: version)
       crash_reports.each_with_index do |crash_report, i|
-        puts ''
-        puts("------------- ##{(i + 1)} --------------")
-        crash_report.each { |line| puts(line) }
+        puts("\n------------- ##{(i + 1)} --------------")
+        crash_report.each do |line|
+          puts(line)
+        end
       end
     end
 
@@ -46,14 +45,15 @@ module Crep
     end
 
     def crash_report(crash:, percentage:, version:)
+      raise 'Crash info does not fulfill the requirements' unless crash.is_a? Crep::Crash
       report = []
       report.push "Class: #{crash.crash_class}"
       report.push "First appeared at #{crash.registered_at} and occurred #{crash.occurrences} times in #{version}"
       report.push "Percentage: #{percentage.round(2)}% of all #{version} crashes"
       report.push "File/Line: #{crash.file_line}"
-      report.push "Reason: #{crash.reason}" #crash.reason[0..80]
+      report.push "Reason: #{crash.reason}" # crash.reason[0..80]
       report.push "Link: #{crash.url}"
       report
-      end
+    end
   end
 end

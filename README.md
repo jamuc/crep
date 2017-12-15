@@ -8,9 +8,13 @@ Crep - a Crash Reporter for creating appealing Crash Newsletters
 
 The `--only-unresolved` flag filters out any crashes marked as resolved.
 
+## Install
+
+Please follow our guide in the [Installation Instructions](https://github.com/xing/crep/wiki/Install).
+
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://source.xing.com/mobile-releases/crep.
+Bug reports and pull requests are most welcome!
 
 ## License
 

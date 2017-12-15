@@ -8,8 +8,8 @@ module Crep
   class HockeyAppCrashSource < CrashSource
     def configure(bundle_identifier)
       HockeyApp::Config.configure do |config|
-        raise 'Missing API token (CREP_HOCKEY_API_TOKEN)' unless token = ENV['CREP_HOCKEY_API_TOKEN']
-        config.token = token
+        raise 'Missing API token (CREP_HOCKEY_API_TOKEN)' unless ENV['CREP_HOCKEY_API_TOKEN']
+        config.token = ENV['CREP_HOCKEY_API_TOKEN']
       end
 
       @client = HockeyApp.build_client
@@ -19,7 +19,6 @@ module Crep
 
     def crashes(top, version, build, show_only_unresolved)
       version = version(version: version, build: build)
-
       crash_groups(version, show_only_unresolved).take(top.to_i)
     end
 
@@ -32,10 +31,10 @@ module Crep
     end
 
     def crash_groups(version, show_only_unresolved)
-      reasons = version.crash_reasons ({ 'sort' => 'number_of_crashes', 'order' => 'desc' })
+      reasons = version.crash_reasons('sort' => 'number_of_crashes', 'order' => 'desc')
       unresolved_reasons = show_only_unresolved ? unresolved_reasons(reasons) : reasons
-      crash_groups = unresolved_reasons.map do |reason|
-      url = url(app_id: reason.app.public_identifier, version_id: version.id, reason_id: reason.id)
+      unresolved_reasons.map do |reason|
+        url = url(app_id: reason.app.public_identifier, version_id: version.id, reason_id: reason.id)
         Crash.new(file_line: "#{reason.file}:#{reason.line}",
                   occurrences: reason.number_of_crashes,
                   reason: reason.reason,
@@ -58,26 +57,21 @@ module Crep
     end
 
     def unresolved_reasons(reasons)
-      reasons.select do |reason|
-        reason.fixed == false
-      end
+      reasons.reject(&:fixed)
     end
 
     def hockeyapp(bundle_identifier, client)
       all_apps = client.get_apps
-      apps = all_apps.select do |a|
-        a.bundle_identifier == bundle_identifier
+      apps = all_apps.select do |app|
+        app.bundle_identifier == bundle_identifier
       end
-
       apps.first
     end
 
     def filtered_versions_by_version_and_build(versions, version_filter, build_filter)
-      filtered_versions = versions.select do |version|
-        version.shortversion == version_filter && version.version == build_filter
+      versions.select do |version|
+        (version.shortversion == version_filter) && (version.version == build_filter)
       end
-
-      filtered_versions
     end
   end
 end
