@@ -2,6 +2,8 @@ require 'spec_helper'
 
 expected_occurrences = 'First appeared on 2017-07-14 and occurred 50 times in 0.0.1'
 expected_link = 'Link: https://my.crash.url'
+expected_reason = 'Reason: Unknown'
+crash_1 = Crep::Crash.new(file_line: 'line:123', occurrences: 125, reason: 'Unknown', crash_class: 'SomeWeirdClass', registered_at: Date.parse('2017-07-14'), url: 'https://my.crash.url')
 
 RSpec.describe Crep::CrashController do
   subject do
@@ -12,25 +14,21 @@ RSpec.describe Crep::CrashController do
 
   describe 'crash_report' do
     let(:crash_controller) { subject.new }
-    let(:line) { 'line:123' }
-    let(:crash_occurrences) { 125 }
-    let(:crash_date) { Date.parse('2017-07-14') }
-    let(:crash_url) { 'https://my.crash.url' }
-    let(:crash_reason) { 'Unknown' }
-    let(:crash_class_) { 'SomeWeirdClass' }
-    let(:crash_instance) { Crep::Crash.new(file_line: line, occurrences: crash_occurrences, reason: crash_reason, crash_class: crash_class_, registered_at: crash_date, url: crash_url) }
+    let(:crash_instance) { crash_1 }
     let(:random_array) { %w[some random array] }
-    let(:crash_percentage) { 5.124 }
-    let(:app_version) { '1.0.19' }
 
     it 'should return a correct result' do
-      result = crash_controller.crash_report(crash: crash_instance, percentage: crash_percentage, version: app_version)
-      expect(result).to eql(["Class: #{crash_class_}", "First appeared on #{crash_date} and occurred #{crash_occurrences} times in #{app_version}", "Percentage: #{crash_percentage.round(2)}% of all #{app_version} crashes", "File/Line: #{line}", "Reason: #{crash_reason}", expected_link])
+      result = crash_controller.crash_report(crash: crash_instance, percentage: 5.124, version: '1.0.19')
+      expect(result).to eql(['Class: SomeWeirdClass',
+                             'First appeared on 2017-07-14 and occurred 125 times in 1.0.19',
+                             'Percentage: 5.12% of all 1.0.19 crashes', 'File/Line: line:123',
+                             'Reason: Unknown',
+                             'Link: https://my.crash.url'])
     end
 
     it 'should raise when crash is not defined correctly' do
       expect do
-        crash_controller.crash_report(crash: random_array, percentage: crash_percentage, version: app_version)
+        crash_controller.crash_report(crash: random_array, percentage: 5.124, version: '1.0.19')
       end.to raise_exception('Crash info does not fulfill the requirements')
     end
   end
