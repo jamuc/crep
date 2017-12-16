@@ -2,14 +2,16 @@ Reporting for app_name (0.1.19/1114) bundle.id
 
 ------------- #1 --------------
 Class: SomeWeirdClass
-Occurrences: 50
+First appeared on 2017-07-14 and occurred 50 times in 0.1.19
 Percentage: 33.33% of all 0.1.19 crashes
 File/Line: line:123
 Reason: Unknown
+Link: https://my.crash.url
 
 ------------- #2 --------------
 Class: SomeOtherClass
-Occurrences: 100
+First appeared on 2017-07-14 and occurred 100 times in 0.1.19
 Percentage: 66.67% of all 0.1.19 crashes
 File/Line: line:123
 Reason: Unknown
+Link: https://my.crash.url
