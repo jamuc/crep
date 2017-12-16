@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-expected_occurrences = 'First appeared at 2017-07-14 and occurred 50 times in 0.0.1'
+expected_occurrences = 'First appeared on 2017-07-14 and occurred 50 times in 0.0.1'
 expected_link = 'Link: https://my.crash.url'
 
 RSpec.describe Crep::CrashController do
@@ -25,7 +25,7 @@ RSpec.describe Crep::CrashController do
 
     it 'should return a correct result' do
       result = crash_controller.crash_report(crash: crash_instance, percentage: crash_percentage, version: app_version)
-      expect(result).to eql(["Class: #{crash_class_}", "First appeared at #{crash_date} and occurred #{crash_occurrences} times in #{app_version}", "Percentage: #{crash_percentage.round(2)}% of all #{app_version} crashes", "File/Line: #{line}", "Reason: #{crash_reason}", expected_link])
+      expect(result).to eql(["Class: #{crash_class_}", "First appeared on #{crash_date} and occurred #{crash_occurrences} times in #{app_version}", "Percentage: #{crash_percentage.round(2)}% of all #{app_version} crashes", "File/Line: #{line}", "Reason: #{crash_reason}", expected_link])
     end
 
     it 'should raise when crash is not defined correctly' do
@@ -93,7 +93,7 @@ RSpec.describe Crep::CrashController do
       result = subject.new.report(crashes: [crash_instance, crash_instance_2], total_crashes: 400, app_name: 'name', identifier: 'identifier.app', version: '0.0.1', build: 5)
       expect(result).to eql([
                               ['Class: SomeWeirdClass', expected_occurrences, 'Percentage: 12.5% of all 0.0.1 crashes', 'File/Line: line:123', 'Reason: Unknown', expected_link],
-                              ['Class: SomeOtherClass', 'First appeared at 2017-07-14 and occurred 100 times in 0.0.1', 'Percentage: 25.0% of all 0.0.1 crashes', 'File/Line: line:123', 'Reason: Unknown', expected_link]
+                              ['Class: SomeOtherClass', 'First appeared on 2017-07-14 and occurred 100 times in 0.0.1', 'Percentage: 25.0% of all 0.0.1 crashes', 'File/Line: line:123', 'Reason: Unknown', expected_link]
                             ])
     end
   end
@@ -128,8 +128,8 @@ RSpec.describe Crep::CrashController do
 
     it 'should receive info from @crash_source and return result' do
       expect(subject.new.top_crashes('0.1.19', 1114)).to eql([
-                                                               ['Class: SomeWeirdClass', 'First appeared at 2017-07-14 and occurred 50 times in 0.1.19', 'Percentage: 33.33% of all 0.1.19 crashes', 'File/Line: line:123', 'Reason: Unknown', expected_link],
-                                                               ['Class: SomeOtherClass', 'First appeared at 2017-07-14 and occurred 100 times in 0.1.19', 'Percentage: 66.67% of all 0.1.19 crashes', 'File/Line: line:123', 'Reason: Unknown', expected_link]
+                                                               ['Class: SomeWeirdClass', 'First appeared on 2017-07-14 and occurred 50 times in 0.1.19', 'Percentage: 33.33% of all 0.1.19 crashes', 'File/Line: line:123', 'Reason: Unknown', expected_link],
+                                                               ['Class: SomeOtherClass', 'First appeared on 2017-07-14 and occurred 100 times in 0.1.19', 'Percentage: 66.67% of all 0.1.19 crashes', 'File/Line: line:123', 'Reason: Unknown', expected_link]
                                                              ])
     end
   end
