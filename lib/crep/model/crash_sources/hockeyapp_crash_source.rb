@@ -8,8 +8,8 @@ module Crep
   class HockeyAppCrashSource < CrashSource
     def configure(bundle_identifier)
       HockeyApp::Config.configure do |config|
-        raise 'Missing API token (CREP_HOCKEY_API_TOKEN)' unless token = ENV['CREP_HOCKEY_API_TOKEN']
-        config.token = token
+        raise 'Missing API token (CREP_HOCKEY_API_TOKEN)' unless ENV['CREP_HOCKEY_API_TOKEN']
+        config.token = ENV['CREP_HOCKEY_API_TOKEN']
       end
 
       @client = HockeyApp.build_client
@@ -34,11 +34,18 @@ module Crep
       reasons = version.crash_reasons('sort' => 'number_of_crashes', 'order' => 'desc')
       unresolved_reasons = show_only_unresolved ? unresolved_reasons(reasons) : reasons
       unresolved_reasons.map do |reason|
+        url = url(app_id: reason.app.public_identifier, version_id: version.id, reason_id: reason.id)
         Crash.new(file_line: "#{reason.file}:#{reason.line}",
                   occurrences: reason.number_of_crashes,
                   reason: reason.reason,
-                  crash_class: reason.crash_class)
+                  crash_class: reason.crash_class,
+                  registered_at: Date.parse(reason.created_at),
+                  url: url)
       end
+    end
+
+    def url(app_id:, version_id:, reason_id:)
+      "https://rink.hockeyapp.net/manage/apps/#{app_id}/app_versions/#{version_id}/crash_reasons/#{reason_id}"
     end
 
     def version(version:, build:)

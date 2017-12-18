@@ -1,15 +1,17 @@
-Reporting for name (0.1.14/5) identifier.app
+Reporting for name (0.0.1/5) identifier.app
 
 ------------- #1 --------------
 Class: SomeWeirdClass
-Occurrences: 50
-Percentage: 12.5% of all 0.1.14 crashes
+First appeared on 2017-07-14 and occurred 50 times in 0.0.1
+Percentage: 12.5% of all 0.0.1 crashes
 File/Line: line:123
 Reason: Unknown
+Link: https://my.crash.url
 
 ------------- #2 --------------
 Class: SomeOtherClass
-Occurrences: 100
-Percentage: 25.0% of all 0.1.14 crashes
+First appeared on 2017-07-14 and occurred 100 times in 0.0.1
+Percentage: 25.0% of all 0.0.1 crashes
 File/Line: line:123
 Reason: Unknown
+Link: https://my.crash.url

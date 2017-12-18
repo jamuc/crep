@@ -27,11 +27,10 @@ module Crep
 
     def initialize(argv)
       @show_only_unresolved = argv.flag?('only-unresolved', false)
-      @top = argv.option('top')
-      @top ||= DEFAULT_TOP_COUNT
-      raise 'Missing `identifier` parameter' unless @bundle_identifier = argv.option('identifier')
-      raise 'Missing `version` parameter' unless @version = argv.option('version')
-      raise 'Missing `build` parameter' unless @build = argv.option('build')
+      @top = argv.option('top') || DEFAULT_TOP_COUNT
+      @bundle_identifier = argv.option('identifier') || raise('Missing `identifier` parameter')
+      @version = argv.option('version') || raise('Missing `version` parameter')
+      @build = argv.option('build') || raise('Missing `build` parameter')
       super
     end
 
