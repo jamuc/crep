@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'hockeyapp'
+  spec.add_dependency 'colorize'
 
   spec.add_runtime_dependency 'claide', '~> 1.0.0'
 

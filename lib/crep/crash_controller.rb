@@ -1,3 +1,5 @@
+require 'colorize'
+
 module Crep
   class CrashController
     def initialize(bundle_identifier, top, crash_source, show_only_unresolved)
@@ -25,6 +27,9 @@ module Crep
       puts("Reporting for #{app_name} (#{version}/#{build}) #{identifier}")
 
       crash_reports = crashes_report(crashes: crashes, total_crashes: total_crashes, version: version)
+      empty_message = total_crashes == 0 ? "Look mom, no crashes... yet!" : "Look mom, no unresolved crashes... yet!"
+      puts(empty_message.green) if crash_reports.empty?
+
       crash_reports.each_with_index do |crash_report, i|
         puts("\n------------- ##{(i + 1)} --------------")
         crash_report.each do |line|
