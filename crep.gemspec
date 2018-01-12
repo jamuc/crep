@@ -6,12 +6,12 @@ require 'crep/version'
 Gem::Specification.new do |spec|
   spec.name          = 'crep'
   spec.version       = Crep::VERSION
-  spec.authors       = ['Kim Dung-Pham']
-  spec.email         = ['kim.dung-pham@xing.com']
+  spec.authors       = ['Kim Dung-Pham', 'Bas Broek', 'Serghei Moret']
+  spec.email         = ['kim.dung-pham@xing.com', 'bas.broek@xing.com', 'serghei.moret@xing.com']
 
   spec.summary       = 'Create Crash Newsletter with ease.'
   spec.description   = 'Create Crash Newsletter with ease. Really.'
-  spec.homepage      = ''
+  spec.homepage      = 'https://github.com/xing/crep'
   spec.license       = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
