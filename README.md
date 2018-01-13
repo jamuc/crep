@@ -22,6 +22,8 @@ Run Crep:
 
 The `--only-unresolved` flag filters out any crashes marked as resolved.
 
+That's how [Crep output](https://github.com/xing/crep/blob/master/spec/fixtures/report_output.txt) can look like.
+
 ## Test
 
 Run `bundle exec rspec` in order to run the tests.
