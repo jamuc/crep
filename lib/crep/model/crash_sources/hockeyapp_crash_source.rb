@@ -53,9 +53,7 @@ module Crep
 
       raise "No version was found for #{version})#{build})" unless filtered_versions.count > 0
 
-      if filtered_versions.count > 1
-        puts "Multiple results for #{version})#{build}) were found, using the first one we found"
-      end
+      puts "Multiple results for #{version}/#{build} were found, using the first one that was found" unless filtered_versions.count <= 1
 
       filtered_versions.first
     end
