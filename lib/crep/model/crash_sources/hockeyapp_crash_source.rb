@@ -51,9 +51,9 @@ module Crep
     def version(version:, build:)
       filtered_versions = filtered_versions_by_version_and_build(@hockeyapp_app.versions, version, build)
 
-      raise "No version was found for #{version})#{build})" unless filtered_versions.count > 0
+      raise "No version was found for #{version})#{build})".red unless filtered_versions.count > 0
 
-      puts "Multiple results for #{version}/#{build} were found, using the first one that was found" unless filtered_versions.count <= 1
+      puts "Multiple results for #{version}/#{build} were found, using the first (with ID #{filtered_versions.first.id}) one that was found".yellow unless filtered_versions.count <= 1
 
       filtered_versions.first
     end
