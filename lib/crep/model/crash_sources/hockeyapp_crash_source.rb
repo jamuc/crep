@@ -53,9 +53,11 @@ module Crep
 
       raise "No version was found for #{version})#{build})".red unless filtered_versions.count > 0
 
-      puts "Multiple results for #{version}/#{build} were found, using the first (with ID #{filtered_versions.first.id}) one that was found".yellow unless filtered_versions.count <= 1
+      report_version = filtered_versions.first
 
-      filtered_versions.first
+      puts "Multiple results for #{version}/#{build} were found, using the first (with ID #{report_version.id}) one that was found".yellow unless filtered_versions.count <= 1
+
+      report_version
     end
 
     def unresolved_reasons(reasons)
