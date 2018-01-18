@@ -7,7 +7,7 @@ module Crep
   CrepLogger.formatter = proc do |severity, datetime, progname, msg|
     case severity
         when "DEBUG"
-          "\e[35m[DEBUG] #{datetime}: #{msg}\033[0m\n"
+          "\e[DEBUG] #{datetime}: #{msg}\n".light_magenta
         when "ERROR"
           "[ERROR] #{datetime}: #{msg}\n".red
         when "FATAL"
