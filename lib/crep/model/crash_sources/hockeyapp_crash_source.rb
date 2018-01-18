@@ -1,6 +1,7 @@
 require 'crep/model/crash_sources/crash_source'
 require 'crep/model/crash_model/app'
 require 'crep/model/crash_model/crash'
+require 'crep/logger'
 require 'hockeyapp'
 
 module Crep
