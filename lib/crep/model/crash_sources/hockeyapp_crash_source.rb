@@ -55,7 +55,7 @@ module Crep
 
       report_version = filtered_versions.first
 
-      puts "Multiple results for #{version}/#{build} were found, using the first (with ID #{report_version.id}) one that was found".yellow unless filtered_versions.count <= 1
+      CrepLogger.warn("Multiple results for #{version}/#{build} were found, using the first (with ID #{report_version.id}) one that was found") unless filtered_versions.count <= 1
 
       report_version
     end

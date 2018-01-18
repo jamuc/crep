@@ -24,11 +24,11 @@ module Crep
     end
 
     def report(crashes:, total_crashes:, app_name:, identifier:, version:, build:)
-      puts("Reporting for #{app_name} (#{version}/#{build}) #{identifier}")
+      CrepLogger.info("Reporting for #{app_name} (#{version}/#{build}) #{identifier}")
 
       crash_reports = crashes_report(crashes: crashes, total_crashes: total_crashes, version: version)
       empty_message = total_crashes == 0 ? "Look mom, no crashes... yet!" : "Look mom, no unresolved crashes... yet!"
-      puts(empty_message.green) if crash_reports.empty?
+      CrepLogger.info(empty_message) if crash_reports.empty?
 
       crash_reports.each_with_index do |crash_report, i|
         puts("\n------------- ##{(i + 1)} --------------")
