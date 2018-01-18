@@ -20,9 +20,9 @@ Run Crep:
 
 `bundle exec crep crashes --identifier='com.example.company' --version='1.23.0' --build='42' --only-unresolved`
 
-The `--only-unresolved` flag filters out any crashes marked as resolved.
-
-That's how [Crep output](https://github.com/xing/crep/blob/master/spec/fixtures/report_output.txt) can look like:
+The `--only-unresolved` flag filters out any crashes marked as resolved.  
+  
+#### That's how [Crep output](https://github.com/xing/crep/blob/master/spec/fixtures/report_output.txt) can look like:
 ```
 Reporting for YourApp (0.17.1/1114) your.bundle.identifier
 ------------- #1 --------------
