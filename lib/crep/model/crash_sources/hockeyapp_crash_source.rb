@@ -1,6 +1,7 @@
 require 'crep/model/crash_sources/crash_source'
 require 'crep/model/crash_model/app'
 require 'crep/model/crash_model/crash'
+require 'crep/logger'
 require 'hockeyapp'
 
 module Crep
@@ -55,7 +56,7 @@ module Crep
 
       report_version = filtered_versions.first
 
-      puts "Multiple results for #{version}/#{build} were found, using the first (with ID #{report_version.id}) one that was found".yellow unless filtered_versions.count <= 1
+      CrepLogger.warn("Multiple results for #{version}/#{build} were found, using the first (with ID #{report_version.id}) one that was found") unless filtered_versions.count <= 1
 
       report_version
     end
