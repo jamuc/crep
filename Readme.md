@@ -2,6 +2,8 @@
 
 *Crep - a Crash Reporter for creating appealing Crash Newsletters*
 
+![the crab logo](logo_small.png)
+
 ![the crab logo](logo.png)
 
 ![the crab logo](logo_dark.png)
