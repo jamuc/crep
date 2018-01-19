@@ -13,8 +13,6 @@
 
 - Fixed an invalid identifier produces a bogus error (#46)
 
--
-
 ## Miscellaneous
 
 -
