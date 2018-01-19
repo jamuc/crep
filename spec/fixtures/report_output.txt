@@ -1,4 +1,3 @@
-Reporting for name (0.0.1/5) identifier.app
 
 ------------- #1 --------------
 Class: SomeWeirdClass

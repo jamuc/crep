@@ -82,25 +82,11 @@ RSpec.describe Crep::CrashController do
     let(:crash_instance) { Crep::Crash.new(file_line: line, occurrences: crash_occurrences, reason: crash_reason, crash_class: crash_class_, registered_at: crash_date, url: crash_url) }
     let(:crash_instance_2) { Crep::Crash.new(file_line: line, occurrences: crash_occurrences_2, reason: crash_reason, crash_class: crash_class_2, registered_at: crash_date, url: crash_url) }
     let(:expected_output) { File.read("spec/fixtures/report_output.txt") }
-    let(:expected_empty_output) { "Reporting for name (0.1.14/5) identifier.app\n\e[0;32;49mLook mom, no crashes... yet!\e[0m\n" }
-    let(:expected_empty_output_2) { "Reporting for name (0.1.14/5) identifier.app\n\e[0;32;49mLook mom, no unresolved crashes... yet!\e[0m\n" }
 
     it 'should output the result' do
       expect do
         subject.new.report(crashes: [crash_instance, crash_instance_2], total_crashes: 400, app_name: 'name', identifier: 'identifier.app', version: '0.0.1', build: 5)
       end.to output(expected_output).to_stdout
-    end
-
-    it 'should output the result when there are no crashes' do
-      expect do
-        subject.new.report(crashes: [], total_crashes: 0, app_name: 'name', identifier: 'identifier.app', version: '0.1.14', build: 5)
-      end.to output(expected_empty_output).to_stdout
-    end
-
-    it 'should output the result when there are no unresolved crashes' do
-      expect do
-        subject.new.report(crashes: [], total_crashes: 400, app_name: 'name', identifier: 'identifier.app', version: '0.1.14', build: 5)
-      end.to output(expected_empty_output_2).to_stdout
     end
 
     it 'should receive array of crashes and return result' do
