@@ -11,6 +11,8 @@
 
 ## Fixed
 
+- #46 An invalid identifier produces a bogus error
+
 -
 
 ## Miscellaneous
