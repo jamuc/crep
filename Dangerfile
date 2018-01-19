@@ -1,7 +1,7 @@
 not_declared_trivial = !github.pr_title.include?("trivial")
 
 has_lib_changes = !git.modified_files.grep(/lib/).empty?
-has_fixture_changes = !(git.modified_files.grep(/spec/fixtures/).empty?)
+has_fixture_changes = !git.modified_files.grep(/fixtures/).empty?
 no_readme_changes = !git.modified_files.include?("Readme.md")
 
 no_changelog_entry = !git.modified_files.include?("Changelog.md")
