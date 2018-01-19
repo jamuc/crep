@@ -11,7 +11,7 @@
 
 ## Fixed
 
-- Fixed an invalid identifier produces a bogus error (#46)
+- Fixed an invalid identifier producing a bogus error (#46)
 
 ## Miscellaneous
 
