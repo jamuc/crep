@@ -4,6 +4,8 @@
 
 ![the crab logo](logo_small.png)
 
+![the crab logo](logo_square.png)
+
 ![the crab logo](logo.png)
 
 ![the crab logo](logo_dark.png)
