@@ -15,6 +15,7 @@ module Crep
 
       @client = HockeyApp.build_client
       @hockeyapp_app = hockeyapp(bundle_identifier, @client)
+      CrepLogger.error("No app with the give bundle identifier (#{bundle_identifier}) was found.") unless @hockeyapp_app
       @app = App.new(@hockeyapp_app.title, bundle_identifier)
     end
 
