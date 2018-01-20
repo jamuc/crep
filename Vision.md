@@ -1,6 +1,6 @@
 # Goals
 
-- Add newsletter templating to easily create a readable and actionable format for sharing crashes.
+- Add templating support for reports to easily create a readable and actionable format for sharing crashes.
 - Add multiple crash sources, making it easier for anyone to plug and play.
 - Enable newsletters or results to be easily published on sites like GitHub.
 - Cultivate an inclusive open source community through respectful discussion.
@@ -8,7 +8,7 @@
 # Scope
 
 - We are focusing on crashes for a specific app version.
-- Having a crash newsletter in mind, we do not expect adding crash visualisations.
+- We do not expect adding crash visualisations.
 
 ## Inspiration
 
