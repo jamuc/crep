@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Kim Dung-Pham', 'Bas Broek', 'Serghei Moret']
   spec.email         = ['kim.dung-pham@xing.com', 'bas.broek@xing.com', 'serghei.moret@xing.com']
 
-  spec.summary       = 'Create Crash Newsletter with ease.'
-  spec.description   = 'Create Crash Newsletter with ease. Really.'
+  spec.summary       = 'Create Crash Reports with ease.'
+  spec.description   = 'Create Crash Reports with ease. Really.'
   spec.homepage      = 'https://github.com/xing/crep'
   spec.license       = 'MIT'
 
