@@ -22,16 +22,25 @@ module Crep
     DESC
 
     self.description = <<-DESC
-      Besides the optional `top` parameter, Crep requires all other parameters.
+      Besides the optional `top`, `verbose` and `only-unresolved` parameters, Crep requires all other parameters.
     DESC
 
     def initialize(argv)
+      super
+
       @show_only_unresolved = argv.flag?('only-unresolved', false)
       @top = argv.option('top') || DEFAULT_TOP_COUNT
-      @bundle_identifier = argv.option('identifier') || raise('Missing `identifier` parameter')
-      @version = argv.option('version') || raise('Missing `version` parameter')
-      @build = argv.option('build') || raise('Missing `build` parameter')
+      @bundle_identifier = argv.option('identifier')
+      @version = argv.option('version')
+      @build = argv.option('build')
+    end
+
+    def validate!
       super
+
+      help! "The identifier (--identifier) is a required parameter" unless @bundle_identifier
+      help! "The version (--version)  is a required parameter" unless @version
+      help! "The build number (--build) is a required parameter" unless @build
     end
 
     def run
