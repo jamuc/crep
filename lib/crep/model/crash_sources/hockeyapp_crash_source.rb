@@ -74,7 +74,7 @@ module Crep
         app.bundle_identifier == bundle_identifier
       end
       if !apps.first
-        CrepLogger.error("No app with the give bundle identifier (#{bundle_identifier}) was found.") unless apps.first
+        CrepLogger.error("No app with the give bundle identifier (#{bundle_identifier}) was found.")
         raise
       end
       apps.first
