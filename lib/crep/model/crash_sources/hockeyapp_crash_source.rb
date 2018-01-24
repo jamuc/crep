@@ -52,7 +52,10 @@ module Crep
     def version(version:, build:)
       filtered_versions = filtered_versions_by_version_and_build(@hockeyapp_app.versions, version, build)
 
-      raise "No version was found for #{version})#{build})".red unless filtered_versions.count > 0
+      if filtered_versions.count <= 0
+        CrepLogger.error("No version was found for #{version})#{build})")
+        raise
+      end
 
       report_version = filtered_versions.first
 
@@ -69,6 +72,10 @@ module Crep
       all_apps = client.get_apps
       apps = all_apps.select do |app|
         app.bundle_identifier == bundle_identifier
+      end
+      if !apps.first
+        CrepLogger.error("No app with the give bundle identifier (#{bundle_identifier}) was found.")
+        raise
       end
       apps.first
     end
