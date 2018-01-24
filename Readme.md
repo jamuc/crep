@@ -1,12 +1,12 @@
 # Crep
 
-*Crep - a Crash Reporter for creating appealing Crash Newsletters*
+*Crep - a Crash Reporter for creating appealing Crash Reports*
 
 ![the crab logo](assets/logo_small.png)
 
 We use Crep at [XING](https://www.xing.com) to create our Crash Newsletters for [iOS](https://www.xing.com/ios) and [Android](https://www.xing.com/android) within the _Mobile Releases Team_. It currently uses [HockeyApp](https://rink.hockeyapp.net) as a crash source, so if you are using Hockey, you should definitely give Crep a try.
 
-In case you are creating Crash Newsletters and have a different crash source in mind - check out the contributing section!
+In case you are creating Crash Reports and have a different crash source in mind - check out the contributing section!
 
 ## Install
 
