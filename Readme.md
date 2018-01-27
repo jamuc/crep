@@ -24,7 +24,7 @@ Run Crep:
 
 The `--only-unresolved` flag filters out any crashes marked as resolved.  
   
-**This is how [Crep output](https://github.com/xing/crep/blob/master/spec/fixtures/report_output.txt) can look like:**
+**This is what [Crep output](https://github.com/xing/crep/blob/master/spec/fixtures/report_output.txt) can look like:**
 
 ```
 Reporting for YourApp (0.17.1/1114) your.bundle.identifier
