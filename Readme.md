@@ -55,6 +55,15 @@ Run `bundle exec rspec` in order to run the tests.
 
 👷🏼 In case you want to use a different crash source - feel free to add on, we are looking forward to your pull request, we'd love to help!
 
+You can help by doing any of the following:
+
+- Reviewing pull requests
+- Bringing ideas for the new features
+- Answering questions on issues
+- Improving documentation
+
+This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant code](http://contributor-covenant.org/) of conduct.
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
