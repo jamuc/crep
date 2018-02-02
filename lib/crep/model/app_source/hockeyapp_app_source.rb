@@ -14,7 +14,16 @@ module Crep
           end
           
         def apps()
-            ["an app", "another app"]
-        end      
+            @client.get_apps.map do | app | 
+                app
+            end
+        end
+
+        def versions(app)
+            n = 5
+            app.versions.first(n).map do | version |
+                "#{ version.shortversion } (#{ version.version })"
+            end
+        end
     end
 end

@@ -4,6 +4,8 @@ require 'crep/model/app_source/hockeyapp_app_source'
 
 module Crep
     class Apps < Command
+
+        # options should accept app name and version filter
   
         self.summary = <<-DESC
             Shows the apps available for the current API token

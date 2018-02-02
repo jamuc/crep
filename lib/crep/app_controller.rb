@@ -14,7 +14,12 @@ module Crep
         end
 
         def report_app(app)
-            puts app
+            puts app.title
+            report_app_versions(app)
+        end
+
+        def report_app_versions(app)
+            puts @app_source.versions(app)
         end
     end    
 end

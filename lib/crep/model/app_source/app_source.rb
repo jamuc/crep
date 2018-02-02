@@ -9,6 +9,10 @@ module Crep
         def apps()
             raise 'AppSource subclass has to implement the `apps` method.'
         end
+
+        def versions(_app)
+            raise 'AppSource subclass has to implement the `versions` method.'
+        end
     end
 
 end
