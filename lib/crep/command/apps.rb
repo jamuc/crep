@@ -1,4 +1,5 @@
 require 'crep/command'
+require 'crep/app_controller'
 require 'hockeyapp'
 
 module Crep
@@ -17,7 +18,8 @@ module Crep
         end
 
         def run
-            CrepLogger.info("Running apps command.")
+            app_controller = AppController.new()
+            app_controller.apps()
         end
     end
 end
