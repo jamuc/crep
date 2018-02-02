@@ -1,5 +1,3 @@
-require 'colorize'
-
 module Crep
   class CrashController
     def initialize(bundle_identifier, top, crash_source, show_only_unresolved)

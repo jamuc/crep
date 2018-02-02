@@ -1,6 +1,6 @@
 require 'crep/command'
 require 'crep/app_controller'
-require 'hockeyapp'
+require 'crep/model/app_source/hockeyapp_app_source'
 
 module Crep
     class Apps < Command
@@ -18,7 +18,8 @@ module Crep
         end
 
         def run
-            app_controller = AppController.new()
+            app_source = HockeyAppAppSource.new
+            app_controller = AppController.new(app_source)
             app_controller.apps()
         end
     end
