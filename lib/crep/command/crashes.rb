@@ -1,4 +1,3 @@
-require 'crep/command'
 require 'crep/crash_controller'
 require 'crep/model/crash_sources/hockeyapp_crash_source'
 require 'hockeyapp'
