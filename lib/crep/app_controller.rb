@@ -26,7 +26,7 @@ module Crep
         end
 
         def report_app_versions(app)
-            @app_source.versions(app, 5).map do | version |
+            @app_source.versions(app, @versions_limit).map do | version |
                 puts "\t\t" + version
             end
         end
