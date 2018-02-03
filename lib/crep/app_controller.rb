@@ -1,14 +1,21 @@
 module Crep
     class AppController
 
-        def initialize(app_source)
+        def initialize(app_source, identifier, version, build, versions_limit)
+          @identifier = identifier ? identifier.downcase : nil
+            @version = version
+            @build = build
+            @versions_limit = versions_limit
+
             @app_source = app_source
             @app_source.configure()
         end
         
         def apps
-            CrepLogger.info("Reporting apps:")
-            @app_source.apps().each do | app |
+          filtered_apps = @app_source.apps.select do | app |
+            @identifier ? app.bundle_identifier.downcase == @identifier : true
+          end
+            filtered_apps.each do | app |
                 report_app(app)
             end
         end

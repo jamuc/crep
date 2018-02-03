@@ -27,15 +27,18 @@ module Crep
     def initialize(argv)
       super
 
-      @versions = argv.option('versions').to_i || DEFAULT_VERSIONS_LIMIT
+      @versions_limit = argv.option('versions').to_i || DEFAULT_VERSIONS_LIMIT
       @identifier = argv.option('identifier')
+      CrepLogger.info("Identifier is #{ @identifier }") unless !@identifier
       @version = argv.option('version')
       @build = argv.option('build')
     end
 
     def run
+      CrepLogger.info("Reporting apps:")
+
       app_source = HockeyAppAppSource.new
-      app_controller = AppController.new(app_source)
+      app_controller = AppController.new(app_source, @identifier, @version, @build, @versions_limit)
       app_controller.apps
     end
   end
