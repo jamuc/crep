@@ -10,7 +10,7 @@ module Crep
       end
 
       @client = HockeyApp.build_client
-      end
+    end
 
     def apps
       @client.get_apps.map do |app|
@@ -18,9 +18,15 @@ module Crep
       end
     end
 
-    def versions(app, limit)
-      app.versions.first(limit).map do | version |
-        "#{version.shortversion} (#{version.version})"
+    def versions(app, version, build, limit)
+      filtered_versions = app.versions.select do | v |
+        version_match = version ? v.shortversion == version : true
+        build_match = build ? v.version == build : true
+        version_match && build_match
+      end
+
+      filtered_versions.first(limit).map do | v |
+        "#{v.shortversion} (#{v.version})"
       end
     end
   end
