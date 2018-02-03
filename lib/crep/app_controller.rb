@@ -14,12 +14,14 @@ module Crep
         end
 
         def report_app(app)
-            puts app.title
+            puts "\n\t\t" + app.title
             report_app_versions(app)
         end
 
         def report_app_versions(app)
-            puts @app_source.versions(app)
+            @app_source.versions(app, 5).map do | version |
+                puts "\t\t" + version
+            end
         end
     end    
 end
