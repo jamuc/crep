@@ -15,9 +15,7 @@ module Crep
     end
 
     def apps
-      @client.get_apps.map do |app|
-        app
-      end
+      @client.get_apps
     end
 
     def versions(app, version, build, limit)
