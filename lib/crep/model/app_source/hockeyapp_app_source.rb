@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'crep/model/app_source/app_source'
+require 'crep/model/crash_model/version'
 require 'hockeyapp'
 
 module Crep
@@ -18,15 +19,16 @@ module Crep
       @client.get_apps
     end
 
-    def versions(app, version, build, limit)
-      filtered_versions = app.versions.select do |v|
-        version_match = version ? v.shortversion == version : true
-        build_match = build ? v.version == build : true
-        version_match && build_match
+    def versions(app_identifier)
+      apps = @client.get_apps.select do |a|
+        a.public_identifier == app_identifier
       end
 
-      filtered_versions.first(limit).map do |v|
-        "#{v.shortversion} (#{v.version})"
+      raise("Unable to find app with identifier: #{app_identifier}") unless apps.count > 0
+
+      app = apps.first
+      app.versions.map do |version|
+        Crep::Version.new(version.shortversion, version.version, app.public_identifier.downcase)
       end
     end
   end

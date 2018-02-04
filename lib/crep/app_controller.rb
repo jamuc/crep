@@ -17,17 +17,29 @@ module Crep
         @identifier ? app.bundle_identifier.downcase == @identifier : true
       end
       filtered_apps.each do |app|
-        report_app(app)
+        report_app(app.public_identifier, app.title)
       end
     end
 
-    def report_app(app)
-      puts "\n\t\t" + app.title
-      report_app_versions(app)
+    def report_app(identifier, title)
+      puts "\n\t\t" + title
+      report_app_versions(identifier)
     end
 
-    def report_app_versions(app)
-      @app_source.versions(app, @version, @build, @versions_limit).map do |version|
+    def report_app_versions(app_identifier)
+
+      versions = @app_source.versions(app_identifier)
+
+      filtered_versions = versions.select do |v|
+        version_match = @version ? v.version == @version : true
+        build_match = @build ? v.build == @build : true
+        version_match && build_match
+      end
+
+      out = filtered_versions.first(@versions_limit).map do |v|
+        "#{v.version} (#{v.build})"
+      end
+      out.map do |version|
         puts "\t\t" + version
       end
     end
