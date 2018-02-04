@@ -11,19 +11,19 @@ module Crep
 
     def self.options
       [
-        ['--identifier=<com.company.app>', 'Crep will show app information with this identifier'],
+        ['--identifier=<com.company.app>', 'Crep will show app information with this identifier.'],
         ['--version=<7.10.0>', 'An optional filter for the version of an app.'],
-        ['--build=<24>', 'An optional filter for the build of an App.'],
+        ['--build=<24>', 'An optional filter for the build of an app.'],
         ['--versions=5', "If set, Crep will limit the number of displayed versions per app. #{DEFAULT_VERSIONS_LIMIT} by default."]
       ].concat(super)
     end
 
     self.summary = <<-DESC
-          Shows the apps with their versions available for the current API token
+          Shows the apps with their versions.
       DESC
 
     self.description = <<-DESC
-        Shows apps with their versions. The CREP_HOCKEY_API_TOKEN needs to be set.
+        Display apps with their versions.
       DESC
 
     def initialize(argv)
