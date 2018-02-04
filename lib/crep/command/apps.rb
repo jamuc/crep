@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'crep/command'
 require 'crep/app_controller'
 require 'crep/model/app_source/hockeyapp_app_source'
@@ -28,20 +30,20 @@ module Crep
       super
 
       @versions_limit = argv.option('versions') || DEFAULT_VERSIONS_LIMIT
-      CrepLogger.info("Versions will be limited to #{ @versions_limit } per app")
+      CrepLogger.info("Versions will be limited to #{@versions_limit} per app")
 
       @identifier = argv.option('identifier')
-      CrepLogger.info("Apps will be filtered by identifier: #{ @identifier }") unless !@identifier
-      
+      CrepLogger.info("Apps will be filtered by identifier: #{@identifier}") if @identifier
+
       @version = argv.option('version')
-      CrepLogger.info("Version will be filtered: #{ @version }") unless !@version
+      CrepLogger.info("Version will be filtered: #{@version}") if @version
 
       @build = argv.option('build')
-      CrepLogger.info("Build will be filtered: #{ @build }") unless !@build
+      CrepLogger.info("Build will be filtered: #{@build}") if @build
     end
 
     def run
-      CrepLogger.info("Reporting apps:")
+      CrepLogger.info('Reporting apps:')
 
       app_source = HockeyAppAppSource.new
       app_controller = AppController.new(app_source, @identifier, @version, @build, @versions_limit.to_i)

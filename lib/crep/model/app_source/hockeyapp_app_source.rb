@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'crep/model/app_source/app_source'
 require 'hockeyapp'
 
@@ -19,13 +21,13 @@ module Crep
     end
 
     def versions(app, version, build, limit)
-      filtered_versions = app.versions.select do | v |
+      filtered_versions = app.versions.select do |v|
         version_match = version ? v.shortversion == version : true
         build_match = build ? v.version == build : true
         version_match && build_match
       end
 
-      filtered_versions.first(limit).map do | v |
+      filtered_versions.first(limit).map do |v|
         "#{v.shortversion} (#{v.version})"
       end
     end
