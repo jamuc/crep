@@ -3,7 +3,7 @@
 module Crep
   class AppController
     def initialize(app_source, identifier, version, build, versions_limit)
-      @identifier = identifier ? identifier.downcase : nil
+      @identifier = identifier&.downcase
       @version = version
       @build = build
       @versions_limit = versions_limit
