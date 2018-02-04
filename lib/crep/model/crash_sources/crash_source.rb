@@ -5,7 +5,7 @@ module Crep
 
     # Necessary configuration of the subclass can happen here
     def configure(_bundle_identifier)
-      raise 'CrashSource subclass has to implement the `configure` method.'
+      CrepLogger.info("Configuration of the CrashSource can happen in the `configure` method")
     end
 
     def crash_count(_version, _build)
