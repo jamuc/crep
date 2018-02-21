@@ -58,6 +58,7 @@ module Crep
       report.push "File/Line: #{crash.file_line}"
       report.push "Reason: #{crash.reason}" # crash.reason[0..80]
       report.push "Link: #{crash.url}"
+      report.push "Deep Link: #{crash.deep_link}"
       report
     end
   end

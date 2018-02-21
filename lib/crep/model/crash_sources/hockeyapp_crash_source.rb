@@ -36,17 +36,23 @@ module Crep
       unresolved_reasons = show_only_unresolved ? unresolved_reasons(reasons) : reasons
       unresolved_reasons.map do |reason|
         url = url(app_id: reason.app.public_identifier, version_id: version.id, reason_id: reason.id)
+        deep_link = deep_link(app_id: reason.app.public_identifier, reason_id: reason.id)
         Crash.new(file_line: "#{reason.file}:#{reason.line}",
                   occurrences: reason.number_of_crashes,
                   reason: reason.reason,
                   crash_class: reason.crash_class,
                   registered_at: Date.parse(reason.created_at),
+                  deep_link: deep_link,
                   url: url)
       end
     end
 
     def url(app_id:, version_id:, reason_id:)
       "https://rink.hockeyapp.net/manage/apps/#{app_id}/app_versions/#{version_id}/crash_reasons/#{reason_id}"
+    end
+
+    def deep_link(app_id:, reason_id:)
+      "hockeyapp-coach://view-crash/#{app_id}/#{reason_id}/latest"
     end
 
     def version(version:, build:)
@@ -73,7 +79,7 @@ module Crep
       apps = all_apps.select do |app|
         app.bundle_identifier == bundle_identifier
       end
-      if !apps.first
+      unless apps.first
         CrepLogger.error("No app with the give bundle identifier (#{bundle_identifier}) was found.")
         raise
       end

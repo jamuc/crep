@@ -12,6 +12,7 @@ RSpec.describe Crep::CrashController do
   let(:crash_controller) { subject.new }
   let(:line) { 'line:123' }
   let(:crash_url) { 'https://my.crash.url' }
+  let(:deep_link) { 'hockeyapp-coach://view-crash/app_id/reason_id/latest' }
   let(:crash_class) { 'SomeWeirdClass' }
   let(:crash_reason) { 'Unknown' }
 
@@ -23,7 +24,9 @@ RSpec.describe Crep::CrashController do
                       occurrences: crash_occurrences,
                       reason: crash_reason,
                       crash_class: crash_class,
-                      registered_at: crash_date, url: crash_url)
+                      registered_at: crash_date,
+                      deep_link: deep_link,
+                      url: crash_url)
     end
 
     let(:random_array) { %w[some random array] }
@@ -35,7 +38,7 @@ RSpec.describe Crep::CrashController do
       expect(result).to eql(["Class: #{crash_class}",
                              "First appeared on #{crash_date} and occurred #{crash_occurrences} times in #{app_version}",
                              "Percentage: #{crash_percentage.round(2)}% of all #{app_version} crashes",
-                             "File/Line: #{line}", "Reason: #{crash_reason}", expected_link])
+                             "File/Line: #{line}", "Reason: #{crash_reason}", expected_link, "Deep Link: #{deep_link}"])
     end
 
     it 'should raise when crash is not defined correctly' do
@@ -53,7 +56,9 @@ RSpec.describe Crep::CrashController do
                       occurrences: crash_occurrences,
                       reason: crash_reason,
                       crash_class: crash_class,
-                      registered_at: crash_date, url: crash_url)
+                      registered_at: crash_date,
+                      deep_link: deep_link,
+                      url: crash_url)
     end
 
     let(:total) { 150 }
@@ -73,14 +78,18 @@ RSpec.describe Crep::CrashController do
                       occurrences: crash_occurrences,
                       reason: crash_reason,
                       crash_class: crash_class,
-                      registered_at: crash_date, url: crash_url)
+                      registered_at: crash_date,
+                      deep_link: deep_link,
+                      url: crash_url)
     end
     let(:crash_instance_2) do
       Crep::Crash.new(file_line: line,
                       occurrences: crash_occurrences,
                       reason: crash_reason,
                       crash_class: crash_class_2,
-                      registered_at: crash_date, url: crash_url)
+                      registered_at: crash_date,
+                      deep_link: deep_link,
+                      url: crash_url)
     end
 
     it 'should receive array of crashes and return result' do
@@ -91,7 +100,9 @@ RSpec.describe Crep::CrashController do
                                 expected_occurrences,
                                 'Percentage: 33.33% of all 0.0.1 crashes',
                                 'File/Line: line:123',
-                                'Reason: Unknown', expected_link
+                                'Reason: Unknown',
+                                expected_link,
+                                "Deep Link: #{deep_link}"
                               ],
                               [
                                 'Class: SomeOtherClass',
@@ -99,7 +110,8 @@ RSpec.describe Crep::CrashController do
                                 'Percentage: 33.33% of all 0.0.1 crashes',
                                 'File/Line: line:123',
                                 'Reason: Unknown',
-                                expected_link
+                                expected_link,
+                                "Deep Link: #{deep_link}"
                               ]
                             ])
     end
@@ -116,14 +128,18 @@ RSpec.describe Crep::CrashController do
                       occurrences: crash_occurrences,
                       reason: crash_reason,
                       crash_class: crash_class,
-                      registered_at: crash_date, url: crash_url)
+                      registered_at: crash_date,
+                      deep_link: deep_link,
+                      url: crash_url)
     end
     let(:crash_instance_2) do
       Crep::Crash.new(file_line: line,
                       occurrences: crash_occurrences_2,
                       reason: crash_reason,
                       crash_class: crash_class_2,
-                      registered_at: crash_date, url: crash_url)
+                      registered_at: crash_date,
+                      deep_link: deep_link,
+                      url: crash_url)
     end
 
     it 'should output the result' do
@@ -135,8 +151,8 @@ RSpec.describe Crep::CrashController do
     it 'should receive array of crashes and return result' do
       result = subject.new.report(crashes: [crash_instance, crash_instance_2], total_crashes: 400, app_name: 'name', identifier: 'identifier.app', version: '0.0.1', build: 5)
       expect(result).to eql([
-                              ['Class: SomeWeirdClass', expected_occurrences, 'Percentage: 12.5% of all 0.0.1 crashes', 'File/Line: line:123', 'Reason: Unknown', expected_link],
-                              ['Class: SomeOtherClass', 'First appeared on 2017-07-14 and occurred 100 times in 0.0.1', 'Percentage: 25.0% of all 0.0.1 crashes', 'File/Line: line:123', 'Reason: Unknown', expected_link]
+                              ['Class: SomeWeirdClass', expected_occurrences, 'Percentage: 12.5% of all 0.0.1 crashes', 'File/Line: line:123', 'Reason: Unknown', expected_link, "Deep Link: #{deep_link}"],
+                              ['Class: SomeOtherClass', 'First appeared on 2017-07-14 and occurred 100 times in 0.0.1', 'Percentage: 25.0% of all 0.0.1 crashes', 'File/Line: line:123', 'Reason: Unknown', expected_link, "Deep Link: #{deep_link}"]
                             ])
     end
   end
@@ -152,14 +168,18 @@ RSpec.describe Crep::CrashController do
                       occurrences: crash_occurrences,
                       reason: crash_reason,
                       crash_class: crash_class,
-                      registered_at: crash_date, url: crash_url)
+                      registered_at: crash_date,
+                      deep_link: deep_link,
+                      url: crash_url)
     end
     let(:crash_instance_2) do
       Crep::Crash.new(file_line: line,
                       occurrences: crash_occurrences_2,
                       reason: crash_reason,
                       crash_class: crash_class_2,
-                      registered_at: crash_date, url: crash_url)
+                      registered_at: crash_date,
+                      deep_link: deep_link,
+                      url: crash_url)
     end
 
     before do
@@ -183,14 +203,18 @@ RSpec.describe Crep::CrashController do
                                                                  'First appeared on 2017-07-14 and occurred 50 times in 0.1.19',
                                                                  'Percentage: 33.33% of all 0.1.19 crashes',
                                                                  'File/Line: line:123',
-                                                                 'Reason: Unknown', expected_link
+                                                                 'Reason: Unknown',
+                                                                 expected_link,
+                                                                 "Deep Link: #{deep_link}"
                                                                ],
                                                                [
                                                                  'Class: SomeOtherClass',
                                                                  'First appeared on 2017-07-14 and occurred 100 times in 0.1.19',
                                                                  'Percentage: 66.67% of all 0.1.19 crashes',
                                                                  'File/Line: line:123',
-                                                                 'Reason: Unknown', expected_link
+                                                                 'Reason: Unknown',
+                                                                 expected_link,
+                                                                 "Deep Link: #{deep_link}"
                                                                ]
                                                              ])
     end
