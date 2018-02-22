@@ -35,6 +35,7 @@ Percentage: 12.5% of all 0.17.1 crashes
 File/Line: line:123
 Reason: Unknown
 Link: https://my.crash.url
+Deep Link: hockeyapp-coach://view-crash/app_id/reason_id/latest
 
 ------------- #2 --------------
 Class: SomeOtherClass
@@ -43,6 +44,7 @@ Percentage: 25.0% of all 0.17.1 crashes
 File/Line: line:123
 Reason: Unknown
 Link: https://my.crash.url
+Deep Link: hockeyapp-coach://view-crash/app_id/reason_id/latest
 ```
 
 ## Test
