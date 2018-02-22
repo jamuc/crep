@@ -4,7 +4,7 @@
 
 - Added a warning when multiple versions are found.
 - Added colorful output to the message stating if there was no version found.
-- HockeyApp deep link is now also printed in the report.
+- Added deep link support to HockeyApp reporting.
 
 ## Removed
 
